@@ -1,9 +1,12 @@
 import React from 'react';
-
+import { MantineProvider } from '@mantine/core';
+import HomeScreen from './screens/HomeScreen';
 const App = () => {
   return (
     <>
-      <h1>My App</h1>
+      <MantineProvider withGlobalStyles withNormalizeCSS>
+        <HomeScreen />
+      </MantineProvider>
     </>
   );
 };
