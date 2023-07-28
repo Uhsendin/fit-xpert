@@ -1,11 +1,11 @@
 import React from 'react';
 import { MantineProvider } from '@mantine/core';
-import HomeScreen from './screens/HomeScreen';
+import { Outlet } from 'react-router-dom';
 const App = () => {
   return (
     <>
       <MantineProvider withGlobalStyles withNormalizeCSS>
-        <HomeScreen />
+        <Outlet />
       </MantineProvider>
     </>
   );

@@ -7,6 +7,7 @@ import {
   Group,
   rem,
 } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -99,14 +100,16 @@ export function HeroTitle() {
         </Text>
 
         <Group className={classes.controls}>
-          <Button
-            size="xl"
-            className={classes.control}
-            variant="gradient"
-            gradient={{ from: 'blue', to: 'cyan' }}
-          >
-            Get started
-          </Button>
+          <Link to="authentication">
+            <Button
+              size="xl"
+              className={classes.control}
+              variant="gradient"
+              gradient={{ from: 'blue', to: 'cyan' }}
+            >
+              Get started
+            </Button>
+          </Link>
         </Group>
       </Container>
     </div>
