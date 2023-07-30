@@ -1,116 +1,127 @@
-import React from 'react';
 import {
   createStyles,
+  Image,
   Container,
-  Text,
+  Title,
   Button,
   Group,
+  Text,
+  List,
+  ThemeIcon,
   rem,
 } from '@mantine/core';
+import { IconCheck } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
-  wrapper: {
-    position: 'relative',
-    boxSizing: 'border-box',
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+  inner: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingTop: `calc(${theme.spacing.xl} * 4)`,
+    paddingBottom: `calc(${theme.spacing.xl} * 4)`,
   },
 
-  inner: {
-    position: 'relative',
-    paddingTop: rem(200),
-    paddingBottom: rem(120),
+  content: {
+    maxWidth: rem(480),
+    marginRight: `calc(${theme.spacing.xl} * 3)`,
 
-    [theme.fn.smallerThan('sm')]: {
-      paddingBottom: rem(80),
-      paddingTop: rem(80),
+    [theme.fn.smallerThan('md')]: {
+      maxWidth: '100%',
+      marginRight: 0,
     },
   },
 
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontSize: rem(62),
-    fontWeight: 900,
-    lineHeight: 1.1,
-    margin: 0,
-    padding: 0,
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontSize: rem(44),
+    lineHeight: 1.2,
+    fontWeight: 900,
 
-    [theme.fn.smallerThan('sm')]: {
-      fontSize: rem(42),
-      lineHeight: 1.2,
-    },
-  },
-
-  description: {
-    marginTop: theme.spacing.xl,
-    fontSize: rem(24),
-
-    [theme.fn.smallerThan('sm')]: {
-      fontSize: rem(18),
-    },
-  },
-
-  controls: {
-    marginTop: `calc(${theme.spacing.xl} * 2)`,
-
-    [theme.fn.smallerThan('sm')]: {
-      marginTop: theme.spacing.xl,
+    [theme.fn.smallerThan('xs')]: {
+      fontSize: rem(28),
     },
   },
 
   control: {
-    height: rem(54),
-    paddingLeft: rem(38),
-    paddingRight: rem(38),
-
-    [theme.fn.smallerThan('sm')]: {
-      height: rem(54),
-      paddingLeft: rem(18),
-      paddingRight: rem(18),
+    [theme.fn.smallerThan('xs')]: {
       flex: 1,
     },
+  },
+
+  image: {
+    flex: 1,
+
+    [theme.fn.smallerThan('md')]: {
+      display: 'none',
+    },
+  },
+
+  highlight: {
+    position: 'relative',
+    backgroundColor: theme.fn.variant({
+      variant: 'light',
+      color: theme.primaryColor,
+    }).background,
+    borderRadius: theme.radius.sm,
+    padding: `${rem(4)} ${rem(12)}`,
   },
 }));
 
 export function HeroTitle() {
   const { classes } = useStyles();
-
   return (
-    <div className={classes.wrapper}>
-      <Container size={700} className={classes.inner}>
-        <h1 className={classes.title}>
-          Welcome to{' '}
-          <Text
-            component="span"
-            variant="gradient"
-            gradient={{ from: 'blue', to: 'cyan' }}
-            inherit
-          >
-            FitXpert
-          </Text>{' '}
-          your ultimate fitness companion!
-        </h1>
+    <div>
+      <Container>
+        <div className={classes.inner}>
+          <div className={classes.content}>
+            <Title className={classes.title}>
+              Welcome to <span className={classes.highlight}>FitXpert</span> -
+              Fitness Companion!
+            </Title>
+            <Text color="dimmed" mt="md">
+              Ready for a transformative fitness journey? Meet FitXpert - your
+              all-in-one solution for peak performance and a healthier
+              lifestyle.
+            </Text>
 
-        <Text className={classes.description} color="dimmed">
-          Are you ready to embark on a journey to a healthier and fitter you?
-          Look no further! At FitXpert, we are passionate about helping you
-          achieve your fitness goals and lead a healthier lifestyle.
-        </Text>
-
-        <Group className={classes.controls}>
-          <Link to="authentication">
-            <Button
-              size="xl"
-              className={classes.control}
-              variant="gradient"
-              gradient={{ from: 'blue', to: 'cyan' }}
+            <List
+              mt={30}
+              spacing="sm"
+              size="sm"
+              icon={
+                <ThemeIcon size={20} radius="xl">
+                  <IconCheck size={rem(12)} stroke={1.5} />
+                </ThemeIcon>
+              }
             >
-              Get started
-            </Button>
-          </Link>
-        </Group>
+              <List.Item>
+                <b>Personalized Workout Plans</b> – Our platform tailors
+                workouts to your level and goals. From beginners to athletes,
+                FitXpert provides custom exercises for maximum potential.
+              </List.Item>
+              <List.Item>
+                <b>Nutrition Tracking Made Simple</b> – Fuel your body for
+                success! Easily track your food intake and receive expert
+                dietary recommendations.
+              </List.Item>
+              <List.Item>
+                <b>Interactive Progress Tracking</b> – Stay motivated with
+                comprehensive progress tracking. Celebrate achievements and
+                overcome obstacles with confidence.
+              </List.Item>
+            </List>
+
+            <Group mt={30}>
+              <Link to="authentication">
+                <Button radius="xl" size="md" className={classes.control}>
+                  Get started
+                </Button>
+              </Link>
+            </Group>
+          </div>
+          <Image src="./yoga.png" className={classes.image} />
+        </div>
       </Container>
     </div>
   );

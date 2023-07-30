@@ -4,7 +4,11 @@ import { Outlet } from 'react-router-dom';
 const App = () => {
   return (
     <>
-      <MantineProvider withGlobalStyles withNormalizeCSS>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{ primaryColor: 'pink' }}
+      >
         <Outlet />
       </MantineProvider>
     </>
