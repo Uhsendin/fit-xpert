@@ -10,12 +10,13 @@ import {
 } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen.jsx';
 import { AuthenticationForm } from './screens/AuthenticationScreen.jsx';
-
+import DashboardScreen from './screens/DashboardScreen.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index="true" path="/" element={<HomeScreen />} />
       <Route path="authentication" element={<AuthenticationForm />} />
+      <Route path="dashboard" element={<DashboardScreen />} />
     </Route>,
   ),
 );

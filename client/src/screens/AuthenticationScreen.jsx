@@ -13,6 +13,7 @@ import {
   Stack,
   Box,
 } from '@mantine/core';
+import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -51,7 +52,7 @@ export function AuthenticationForm(props) {
         setRedirect(true);
       } else {
         const data = await res.json();
-        console.log(data.message);
+        toast.error(data.message);
       }
     } catch (err) {
       console.log('Error caught:', err);
@@ -62,7 +63,7 @@ export function AuthenticationForm(props) {
 
   useEffect(() => {
     if (redirect) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [redirect, navigate]);
 
