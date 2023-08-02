@@ -13,9 +13,12 @@ import {
   Stack,
   Box,
 } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function AuthenticationForm(props) {
   const [type, toggle] = useToggle(['login', 'register']);
+  const [redirect, setRedirect] = useState(false);
   const form = useForm({
     initialValues: {
       email: '',
@@ -33,6 +36,36 @@ export function AuthenticationForm(props) {
     },
   });
 
+  async function handleFormSubmit(e) {
+    e.preventDefault();
+    try {
+      const res = await fetch('/api/users/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form.values),
+      });
+
+      if (res.ok) {
+        setRedirect(true);
+      } else {
+        const data = await res.json();
+        console.log(data.message);
+      }
+    } catch (err) {
+      console.log('Error caught:', err);
+    }
+  }
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (redirect) {
+      navigate('/');
+    }
+  }, [redirect, navigate]);
+
   return (
     <Box
       sx={{
@@ -49,7 +82,7 @@ export function AuthenticationForm(props) {
 
         <Divider labelPosition="center" my="lg" />
 
-        <form onSubmit={form.onSubmit(() => {})}>
+        <form onSubmit={handleFormSubmit}>
           <Stack>
             {type === 'register' && (
               <TextInput
