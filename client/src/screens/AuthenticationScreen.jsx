@@ -14,12 +14,20 @@ import {
   Box,
 } from '@mantine/core';
 import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoginMutation } from '../slices/usersApiSlice';
+import setCredentials from '../slices/authSlice';
 
 export function AuthenticationForm(props) {
   const [type, toggle] = useToggle(['login', 'register']);
-  const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const { userInfo } = useSelector((state) => state.auth);
   const form = useForm({
     initialValues: {
       email: '',
@@ -37,35 +45,24 @@ export function AuthenticationForm(props) {
     },
   });
 
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/dashboard');
+    }
+  }, [navigate, userInfo]);
+
+  const { email, password } = form.values;
+
   async function handleFormSubmit(e) {
     e.preventDefault();
     try {
-      const res = await fetch('/api/users/auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form.values),
-      });
-
-      if (res.ok) {
-        setRedirect(true);
-      } else {
-        const data = await res.json();
-        toast.error(data.message);
-      }
+      const res = await login({ email, password }).unwrap();
+      dispatch(setCredentials({ ...res }));
+      navigate('/dashboard');
     } catch (err) {
-      console.log('Error caught:', err);
+      toast.error(err?.data?.message || err.error);
     }
   }
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (redirect) {
-      navigate('/dashboard');
-    }
-  }, [redirect, navigate]);
 
   return (
     <Box
