@@ -1,6 +1,6 @@
 import React from 'react';
-import { HeroTitle } from '../compontents/HeroTitle';
-import { NavSection } from '../compontents/NavSection';
+import { HeroTitle } from '../components/HeroTitle';
+import { NavSection } from '../components/NavSection';
 const HomeScreen = () => {
   return (
     <div>

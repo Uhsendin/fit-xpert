@@ -18,7 +18,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoginMutation } from '../slices/usersApiSlice';
-import setCredentials from '../slices/authSlice';
+import { setCredentials } from '../slices/authSlice';
 
 export function AuthenticationForm(props) {
   const [type, toggle] = useToggle(['login', 'register']);
