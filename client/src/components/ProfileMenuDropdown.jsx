@@ -1,4 +1,4 @@
-import { Menu, Group, UnstyledButton, Button, Text } from '@mantine/core';
+import { Menu, Group, UnstyledButton, Text } from '@mantine/core';
 import { forwardRef } from 'react';
 import {
   IconSettings,
@@ -6,7 +6,7 @@ import {
   IconArrowsLeftRight,
 } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
 export default function ProfileMenuDropdown() {
   const UserButton = forwardRef(({ name, email, ...props }, ref) => (
     <UnstyledButton
@@ -41,7 +41,16 @@ export default function ProfileMenuDropdown() {
       </Group>
     </UnstyledButton>
   ));
+  const navigate = useNavigate();
 
+  const handleClick = (event) => {
+    if (event.target.innerText === 'Settings') {
+      navigate('/settings/profile');
+    }
+    if (event.target.innerText === 'Logout') {
+      console.log('Logging out');
+    }
+  };
   const { userInfo } = useSelector((state) => state.auth);
   return (
     <Menu shadow="md" width={200}>
@@ -51,8 +60,15 @@ export default function ProfileMenuDropdown() {
 
       <Menu.Dropdown>
         <Menu.Label>Application</Menu.Label>
-        <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-        <Menu.Item icon={<IconArrowsLeftRight size={14} />}>Logout</Menu.Item>
+        <Menu.Item icon={<IconSettings size={14} />} onClick={handleClick}>
+          Settings
+        </Menu.Item>
+        <Menu.Item
+          icon={<IconArrowsLeftRight size={14} />}
+          onClick={handleClick}
+        >
+          Logout
+        </Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );

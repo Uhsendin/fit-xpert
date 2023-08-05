@@ -125,10 +125,9 @@ export function MainHeader({ links }) {
   return (
     <Header height={HEADER_HEIGHT} mb={120} className={classes.root}>
       <Container className={classes.header}>
-        <img src="./logo.png" height={30} />
+        <img src="../logo.png" height={30} />
         <Group spacing={5} className={classes.links}>
           {items}
-
           <ProfileMenuDropdown />
         </Group>
 
