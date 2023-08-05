@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   createStyles,
   Header,
@@ -98,6 +98,10 @@ export function MainHeader({ links }) {
   const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
+
+  useEffect(() => {
+    setActive(window.location.pathname);
+  }, []);
 
   const items = links.map((link) => (
     <a
