@@ -5,8 +5,10 @@ import {
   IconChevronRight,
   IconArrowsLeftRight,
 } from '@tabler/icons-react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from '../slices/usersApiSlice';
+import { clearCredentials } from '../slices/authSlice';
 export default function ProfileMenuDropdown() {
   const UserButton = forwardRef(({ name, email, ...props }, ref) => (
     <UnstyledButton
@@ -42,13 +44,22 @@ export default function ProfileMenuDropdown() {
     </UnstyledButton>
   ));
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleClick = (event) => {
+  const [logoutApiCall] = useLogoutMutation();
+
+  const handleClick = async (event) => {
     if (event.target.innerText === 'Settings') {
       navigate('/settings/profile');
     }
     if (event.target.innerText === 'Logout') {
-      console.log('Logging out');
+      try {
+        navigate('/');
+        await logoutApiCall().unwrap();
+        dispatch(clearCredentials());
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   const { userInfo } = useSelector((state) => state.auth);
