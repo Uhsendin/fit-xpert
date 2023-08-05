@@ -11,6 +11,7 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
+import ProfileMenuDropdown from './ProfileMenuDropdown';
 
 const HEADER_HEIGHT = rem(60);
 
@@ -127,6 +128,8 @@ export function MainHeader({ links }) {
         <img src="./logo.png" height={30} />
         <Group spacing={5} className={classes.links}>
           {items}
+
+          <ProfileMenuDropdown />
         </Group>
 
         <Burger
