@@ -27,7 +27,6 @@ export function AuthenticationForm(props) {
 
   const [login] = useLoginMutation();
   const [register] = useRegisterMutation();
-
   const { userInfo } = useSelector((state) => state.auth);
   const form = useForm({
     initialValues: {
