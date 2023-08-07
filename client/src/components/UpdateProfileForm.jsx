@@ -11,14 +11,15 @@ import {
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-
+import { useEffect } from 'react';
+import { setCredentials } from '../slices/authSlice';
+import { useUpdateUserMutation } from '../slices/usersApiSlice';
+import { toast } from 'react-toastify';
 export function UpdateProfileForm(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
-
-  useEffect(() => { }, []);
+  const [updateProfile, { isLoading }] = useUpdateUserMutation();
 
   const form = useForm({
     initialValues: {
@@ -40,13 +41,25 @@ export function UpdateProfileForm(props) {
     },
   });
 
+  const { email, password, name } = form.values;
   const handleFormSubmit = async (e) => {
     if (!form.validate().hasErrors) {
       e.preventDefault();
-      console.log('no erros');
+      try {
+        const res = await updateProfile({
+          _id: userInfo._id,
+          name,
+          email,
+          password,
+        }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        toast.success('Profile updated');
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
     } else {
       e.preventDefault();
-      console.log('has erros');
+      return;
     }
   };
 
