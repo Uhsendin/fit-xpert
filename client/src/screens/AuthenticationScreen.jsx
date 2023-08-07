@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation } from '../slices/usersApiSlice';
+import { useLoginMutation, useRegisterMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 
 export function AuthenticationForm(props) {
@@ -25,7 +25,8 @@ export function AuthenticationForm(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login] = useLoginMutation();
+  const [register] = useRegisterMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
   const form = useForm({
@@ -42,6 +43,7 @@ export function AuthenticationForm(props) {
         val.length <= 6
           ? 'Password should include at least 6 characters'
           : null,
+      name: (val) => (val.trim() === '' ? 'Full name is required' : null),
     },
   });
 
@@ -51,16 +53,32 @@ export function AuthenticationForm(props) {
     }
   }, [navigate, userInfo]);
 
-  const { email, password } = form.values;
+  const { email, password, name } = form.values;
 
   async function handleFormSubmit(e) {
-    e.preventDefault();
-    try {
-      const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      navigate('/dashboard');
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+    if (upperFirst(type) === 'Login') {
+      e.preventDefault();
+      try {
+        const res = await login({ email, password }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        navigate('/dashboard');
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    } else {
+      if (form.validate().hasErrors) {
+        e.preventDefault();
+        return;
+      } else {
+        try {
+          e.preventDefault();
+          const res = await register({ name, email, password }).unwrap();
+          dispatch(setCredentials({ ...res }));
+          navigate('/dashboard');
+        } catch (err) {
+          toast.error(err?.data.message || err.error);
+        }
+      }
     }
   }
 
@@ -84,12 +102,14 @@ export function AuthenticationForm(props) {
           <Stack>
             {type === 'register' && (
               <TextInput
+                required
                 label="Name"
                 placeholder="Your name"
                 value={form.values.name}
                 onChange={(event) =>
                   form.setFieldValue('name', event.currentTarget.value)
                 }
+                error={form.errors.name && 'Name required'}
                 radius="md"
               />
             )}
