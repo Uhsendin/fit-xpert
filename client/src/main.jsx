@@ -16,15 +16,19 @@ import DashboardScreen from './screens/DashboardScreen.jsx';
 import FoodScreen from './screens/FoodScreen.jsx';
 import ExerciseScreen from './screens/ExerciseScreen.jsx';
 import ProfileSettingsScreen from './screens/ProfileSettingsScreen.jsx';
+import PrivateRoute from './components/PrivateRoutes.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index="true" path="/" element={<HomeScreen />} />
       <Route path="authentication" element={<AuthenticationForm />} />
-      <Route path="dashboard" element={<DashboardScreen />} />
-      <Route path="food" element={<FoodScreen />} />
-      <Route path="exercise" element={<ExerciseScreen />} />
-      <Route path="settings/profile" element={<ProfileSettingsScreen />} />
+      {/* {Private Routes} */}
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="dashboard" element={<DashboardScreen />} />
+        <Route path="food" element={<FoodScreen />} />
+        <Route path="exercise" element={<ExerciseScreen />} />
+        <Route path="settings/profile" element={<ProfileSettingsScreen />} />
+      </Route>
     </Route>,
   ),
 );
