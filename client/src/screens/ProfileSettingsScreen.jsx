@@ -19,12 +19,13 @@ const ProfileSettingsScreen = () => {
               theme.colorScheme === 'dark'
                 ? theme.colors.dark[6]
                 : theme.colors.gray[0],
-            textAlign: 'center',
+            // textAlign: 'center',
             padding: theme.spacing.xl,
             borderRadius: theme.radius.md,
           })}
-        ></Box>
-        <UpdateProfileForm />
+        >
+          <UpdateProfileForm />
+        </Box>
       </Container>
     </div>
   );

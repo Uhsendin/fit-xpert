@@ -8,13 +8,14 @@ import {
   Divider,
   Stack,
   Button,
+  SimpleGrid,
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { setCredentials } from '../slices/authSlice';
 import { useUpdateUserMutation } from '../slices/usersApiSlice';
 import { toast } from 'react-toastify';
+
 export function UpdateProfileForm(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -72,54 +73,61 @@ export function UpdateProfileForm(props) {
       <Divider labelPosition="center" my="lg" />
 
       <form onSubmit={handleFormSubmit}>
-        <Stack>
-          <TextInput
-            label="Name"
-            placeholder="Your name"
-            value={form.values.name}
-            onChange={(event) =>
-              form.setFieldValue('name', event.currentTarget.value)
-            }
-            error={form.errors.name && "Can't be empty"}
-            radius="md"
-          />
+        <SimpleGrid
+          cols={2}
+          spacing="lg"
+          breakpoints={[{ maxWidth: '36rem', cols: 1, spacing: 'sm' }]}
+        >
+          <Stack>
+            <TextInput
+              label="Name"
+              placeholder="Your name"
+              value={form.values.name}
+              onChange={(event) =>
+                form.setFieldValue('name', event.currentTarget.value)
+              }
+              error={form.errors.name && "Can't be empty"}
+              radius="md"
+            />
 
-          <TextInput
-            label="Email"
-            placeholder="hello@mantine.dev"
-            value={form.values.email}
-            onChange={(event) =>
-              form.setFieldValue('email', event.currentTarget.value)
-            }
-            error={form.errors.email && 'Invalid email'}
-            radius="md"
-          />
+            <TextInput
+              label="Email"
+              placeholder="email@domain.com"
+              value={form.values.email}
+              onChange={(event) =>
+                form.setFieldValue('email', event.currentTarget.value)
+              }
+              error={form.errors.email && 'Invalid email'}
+              radius="md"
+            />
+          </Stack>
+          <Stack>
+            <PasswordInput
+              label="Password"
+              placeholder="Your password"
+              value={form.values.password}
+              onChange={(event) =>
+                form.setFieldValue('password', event.currentTarget.value)
+              }
+              error={
+                form.errors.password &&
+                'Password should include at least 6 characters'
+              }
+              radius="md"
+            />
 
-          <PasswordInput
-            label="Password"
-            placeholder="Your password"
-            value={form.values.password}
-            onChange={(event) =>
-              form.setFieldValue('password', event.currentTarget.value)
-            }
-            error={
-              form.errors.password &&
-              'Password should include at least 6 characters'
-            }
-            radius="md"
-          />
-
-          <PasswordInput
-            label="Confirm Password"
-            placeholder="Confirm your password"
-            value={form.values.confirmPassword}
-            onChange={(event) =>
-              form.setFieldValue('confirmPassword', event.currentTarget.value)
-            }
-            error={form.errors.confirmPassword && 'Passwords must match'}
-            radius="md"
-          />
-        </Stack>
+            <PasswordInput
+              label="Confirm Password"
+              placeholder="Confirm your password"
+              value={form.values.confirmPassword}
+              onChange={(event) =>
+                form.setFieldValue('confirmPassword', event.currentTarget.value)
+              }
+              error={form.errors.confirmPassword && 'Passwords must match'}
+              radius="md"
+            />
+          </Stack>
+        </SimpleGrid>
 
         <Group position="apart" mt="xl">
           <Button type="submit" radius="xl">
