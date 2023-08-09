@@ -28,7 +28,7 @@ const authUser = asyncHandler(async (req, res) => {
 // route    POST /api/users
 // access   Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, gender, dob, height, weight } = req.body;
 
   const userExists = await User.findOne({ email });
 
@@ -41,6 +41,10 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    gender,
+    dob,
+    height,
+    weight,
   });
 
   if (user) {
@@ -49,6 +53,10 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      gender: user.gender,
+      dob: user.dob,
+      height: user.height,
+      weight: user.weight,
     });
   } else {
     res.status(400);
@@ -75,6 +83,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
     _id: req.user._id,
     name: req.user.name,
     email: req.user.email,
+    gender: req.user.gender,
+    dob: req.user.dob,
+    height: req.user.height,
+    weight: req.user.weight,
   };
   res.status(200).json(user);
 });

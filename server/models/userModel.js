@@ -15,13 +15,30 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    gender: {
+      type: String,
+      enum: ['male', 'female'],
+      required: true,
+    },
+    dob: {
+      type: Date,
+      required: true,
+    },
+    height: {
+      type: Number,
+      required: true,
+    },
+    weight: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
   },
 );
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) {
     next();
   }
@@ -30,7 +47,7 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-userSchema.methods.matchPassword = async function (entertedPassword) {
+userSchema.methods.matchPassword = async function(entertedPassword) {
   return await bcrypt.compare(entertedPassword, this.password);
 };
 
