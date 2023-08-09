@@ -2,12 +2,7 @@ import React from 'react';
 import { MainHeader } from '../components/MainHeader';
 import { Container, Box, Text } from '@mantine/core';
 import { UpdateProfileForm } from '../components/UpdateProfileForm';
-const links = [
-  { label: 'Dashboard', link: '/dashboard' },
-  { label: 'Food', link: '/food' },
-  { label: 'Exercise', link: '/exercise' },
-];
-
+import { links } from '../constants/headerLinks';
 const ProfileSettingsScreen = () => {
   return (
     <div>
