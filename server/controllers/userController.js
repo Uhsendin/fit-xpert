@@ -28,7 +28,7 @@ const authUser = asyncHandler(async (req, res) => {
 // route    POST /api/users
 // access   Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, gender, dob, height, weight } = req.body;
+  const { name, email, password, gender, age, height, weight } = req.body;
 
   const userExists = await User.findOne({ email });
 
@@ -42,7 +42,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password,
     gender,
-    dob,
+    age,
     height,
     weight,
   });
@@ -54,7 +54,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       gender: user.gender,
-      dob: user.dob,
+      age: user.age,
       height: user.height,
       weight: user.weight,
     });
@@ -84,7 +84,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     name: req.user.name,
     email: req.user.email,
     gender: req.user.gender,
-    dob: req.user.dob,
+    age: req.user.age,
     height: req.user.height,
     weight: req.user.weight,
   };

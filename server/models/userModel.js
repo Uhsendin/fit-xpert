@@ -20,8 +20,8 @@ const userSchema = mongoose.Schema(
       enum: ['male', 'female'],
       required: true,
     },
-    dob: {
-      type: Date,
+    age: {
+      type: Number,
       required: true,
     },
     height: {
