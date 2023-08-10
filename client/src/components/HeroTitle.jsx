@@ -10,7 +10,6 @@ import {
   ThemeIcon,
   rem,
 } from '@mantine/core';
-import { IconCheck } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
@@ -89,11 +88,7 @@ export function HeroTitle() {
               mt={30}
               spacing="sm"
               size="sm"
-              icon={
-                <ThemeIcon size={20} radius="xl">
-                  <IconCheck size={rem(12)} stroke={1.5} />
-                </ThemeIcon>
-              }
+              icon={<ThemeIcon size={20} radius="xl"></ThemeIcon>}
             >
               <List.Item>
                 <b>Personalized Workout Plans</b> – Our platform tailors
