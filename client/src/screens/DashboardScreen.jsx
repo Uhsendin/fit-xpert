@@ -1,14 +1,17 @@
 import React from 'react';
 import { MainHeader } from '../components/MainHeader';
-import DailySummary from '../components/dashboard/DailySummary';
-import { Container } from '@mantine/core';
+import { Container, Text } from '@mantine/core';
 import { links } from '../constants/headerLinks';
+import QuickAddDiary from '../components/dashboard/QuickAddDiary';
 const DashboardScreen = () => {
   return (
     <>
       <MainHeader links={links} />
       <Container>
-        <DailySummary />
+        <Text fz="2rem" mb="md" fw={700}>
+          Your Dashboard
+        </Text>
+        <QuickAddDiary />
       </Container>
     </>
   );
