@@ -8,10 +8,12 @@ import {
   Group,
   Button,
   Divider,
-  Checkbox,
+  Select,
   Anchor,
   Stack,
   Box,
+  Radio,
+  NumberInput,
 } from '@mantine/core';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
@@ -19,6 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoginMutation, useRegisterMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
+import { heightToCentimeters } from '../utils/heightToCentimeters';
 
 export function AuthenticationForm(props) {
   const [type, toggle] = useToggle(['login', 'register']);
@@ -33,7 +36,12 @@ export function AuthenticationForm(props) {
       email: '',
       name: '',
       password: '',
-      terms: true,
+      gender: '',
+      age: '',
+      feet: '',
+      inch: '',
+      height: '',
+      weight: '',
     },
 
     validate: {
@@ -52,7 +60,8 @@ export function AuthenticationForm(props) {
     }
   }, [navigate, userInfo]);
 
-  const { email, password, name } = form.values;
+  let { email, password, name, gender, age, feet, inch, height, weight } =
+    form.values;
 
   async function handleFormSubmit(e) {
     if (upperFirst(type) === 'Login') {
@@ -71,7 +80,16 @@ export function AuthenticationForm(props) {
       } else {
         try {
           e.preventDefault();
-          const res = await register({ name, email, password }).unwrap();
+          height = heightToCentimeters(feet, inch);
+          const res = await register({
+            name,
+            email,
+            password,
+            gender,
+            age,
+            height,
+            weight,
+          }).unwrap();
           dispatch(setCredentials({ ...res }));
           navigate('/dashboard');
         } catch (err) {
@@ -139,14 +157,80 @@ export function AuthenticationForm(props) {
               }
               radius="md"
             />
+            {type === 'register' && (
+              <Radio.Group
+                label="Gender"
+                required
+                value={form.values.gender}
+                onChange={(event) => form.setFieldValue('gender', event)}
+              >
+                <Group>
+                  <Radio value="male" label="Male" />
+                  <Radio value="female" label="Female" />
+                </Group>
+              </Radio.Group>
+            )}
+            {type === 'register' && (
+              <NumberInput
+                type="number"
+                value={form.values.age}
+                placeholder="Your age"
+                label="Age"
+                required
+                hideControls
+                onChange={(event) => form.setFieldValue('age', event)}
+              />
+            )}
 
             {type === 'register' && (
-              <Checkbox
-                label="I accept terms and conditions"
-                checked={form.values.terms}
-                onChange={(event) =>
-                  form.setFieldValue('terms', event.currentTarget.checked)
-                }
+              <Group noWrap>
+                <Select
+                  label="Feet"
+                  placeholder="Ft"
+                  value={form.values.feet}
+                  onChange={(event) => form.setFieldValue('feet', event)}
+                  data={[
+                    { value: 1, label: '1' },
+                    { value: 2, label: '2' },
+                    { value: 3, label: '3' },
+                    { value: 4, label: '4' },
+                    { value: 5, label: '5' },
+                    { value: 6, label: '6' },
+                    { value: 7, label: '7' },
+                    { value: 8, label: '8' },
+                  ]}
+                />
+                <Select
+                  label="Inch"
+                  placeholder="In"
+                  value={form.values.inch}
+                  onChange={(event) => form.setFieldValue('inch', event)}
+                  data={[
+                    { value: 0, label: '0' },
+                    { value: 1, label: '1' },
+                    { value: 2, label: '2' },
+                    { value: 3, label: '3' },
+                    { value: 4, label: '4' },
+                    { value: 5, label: '5' },
+                    { value: 6, label: '6' },
+                    { value: 7, label: '7' },
+                    { value: 8, label: '8' },
+                    { value: 9, label: '9' },
+                    { value: 10, label: '10' },
+                    { value: 11, label: '11' },
+                  ]}
+                />
+              </Group>
+            )}
+            {type === 'register' && (
+              <NumberInput
+                type="number"
+                label="Weight (lbs)"
+                value={form.values.weight}
+                placeholder="155"
+                required
+                hideControls
+                onChange={(event) => form.setFieldValue('weight', event)}
               />
             )}
           </Stack>
