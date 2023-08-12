@@ -1,28 +1,18 @@
-import { Box, Flex, Text, createStyles } from '@mantine/core';
+import { Box, Flex, Text, Button, createStyles } from '@mantine/core';
 const useStyles = createStyles((theme) => ({
   box: {
     backgroundColor:
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    border:
       theme.colorScheme === 'dark'
-        ? theme.colors.dark[6]
-        : theme.colors.gray[0],
-    padding: theme.spacing.xl,
+        ? 'solid 1px rgba(255, 255, 255, 0.1)'
+        : 'solid 1px rgba(0, 0, 0, 0.03)',
+
+    padding: theme.spacing.sm,
     marginTop: theme.spacing.xl,
     marginDown: theme.spacing.xl,
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.xs,
-  },
-  quickAdd: {
-    backgroundColor: theme.colorScheme === 'dark' ? '#1A1B1E' : '#fff',
-    borderRadius: theme.radius.md,
-
-    '&:hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[5]
-          : theme.colors.gray[2],
-      cursor: 'pointer',
-      borderRadius: theme.radius.md,
-    },
   },
 }));
 
@@ -44,31 +34,36 @@ const QuickAddDiary = () => {
           <Text fz="lg" p="xs" fw={700}>
             Quick Add to Diary
           </Text>
-          <Text
+          <Button
+            variant="subtle"
+            color="colorScheme"
+            radius="md"
+            size="md"
+            uppercase
             onClick={(e) => handleQuickAdd(e, 'Food')}
-            className={classes.quickAdd}
-            p="xs"
-            fw={500}
-            align="center"
           >
-            FOOD
-          </Text>
-          <Text
+            Food
+          </Button>
+          <Button
+            variant="subtle"
+            color="colorScheme"
+            radius="md"
+            size="md"
+            uppercase
             onClick={(e) => handleQuickAdd(e, 'Exercise')}
-            className={classes.quickAdd}
-            p="xs"
-            fw={500}
           >
-            EXERCISE
-          </Text>
-          <Text
+            Exercise
+          </Button>
+          <Button
+            variant="subtle"
+            color="colorScheme"
+            radius="md"
+            size="md"
+            uppercase
             onClick={(e) => handleQuickAdd(e, 'Note')}
-            className={classes.quickAdd}
-            p="xs"
-            fw={500}
           >
-            NOTE
-          </Text>
+            Note
+          </Button>
         </Flex>
       </Box>
     </div>

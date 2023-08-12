@@ -9,7 +9,16 @@ const App = () => {
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
-        theme={{ primaryColor: 'pink' }}
+        theme={{
+          primaryColor: 'blue',
+          // colorScheme: 'dark',
+          globalStyles: (theme) => ({
+            body: {
+              backgroundColor:
+                theme.colorScheme === 'dark' ? theme.colors.dark[6] : '#fffcf6',
+            },
+          }),
+        }}
       >
         <ToastContainer />
         <Outlet />

@@ -3,6 +3,7 @@ import { MainHeader } from '../components/MainHeader';
 import { Container, Text } from '@mantine/core';
 import { links } from '../constants/headerLinks';
 import QuickAddDiary from '../components/dashboard/QuickAddDiary';
+
 const DashboardScreen = () => {
   return (
     <>
@@ -12,6 +13,7 @@ const DashboardScreen = () => {
           Your Dashboard
         </Text>
         <QuickAddDiary />
+        <Container my="xl"></Container>
       </Container>
     </>
   );
