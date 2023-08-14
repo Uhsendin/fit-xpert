@@ -26,7 +26,7 @@ const QuickAddDiary = () => {
     console.log(type);
   };
   return (
-    <div>
+    <>
       <Box className={classes.box}>
         <Flex
           direction={{ base: 'column', xs: 'row' }}
@@ -72,7 +72,7 @@ const QuickAddDiary = () => {
           </Button>
         </Flex>
       </Box>
-    </div>
+    </>
   );
 };
 
