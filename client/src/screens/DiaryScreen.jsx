@@ -3,6 +3,7 @@ import { MainHeader } from '../components/MainHeader';
 import { links } from '../constants/headerLinks';
 import { Container } from '@mantine/core';
 import Pagination from '../components/diary/Pagination';
+import DiaryPanel from '../components/diary/DiaryPanel';
 const DiaryScreen = () => {
   return (
     <>
@@ -10,6 +11,7 @@ const DiaryScreen = () => {
       <Container fluid>
         <main>
           <Pagination />
+          <DiaryPanel />
         </main>
       </Container>
     </>
