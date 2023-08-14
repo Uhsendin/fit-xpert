@@ -1,4 +1,7 @@
 import { Box, Flex, Text, Button, createStyles } from '@mantine/core';
+import MaterialSymbolsAddNotes from '../../assets/MaterialSymbolsAddNotes';
+import MdiRun from '../../assets/MdiRun';
+import TwemojiRedApple from '../../assets/TwemojiRedApple';
 const useStyles = createStyles((theme) => ({
   box: {
     backgroundColor:
@@ -36,32 +39,35 @@ const QuickAddDiary = () => {
           </Text>
           <Button
             variant="subtle"
-            color="colorScheme"
+            color="dark"
             radius="md"
-            size="md"
+            size="lg"
             uppercase
             onClick={(e) => handleQuickAdd(e, 'Food')}
           >
+            <TwemojiRedApple />
             Food
           </Button>
           <Button
             variant="subtle"
-            color="colorScheme"
+            color="dark"
             radius="md"
-            size="md"
+            size="lg"
             uppercase
             onClick={(e) => handleQuickAdd(e, 'Exercise')}
           >
+            <MdiRun />
             Exercise
           </Button>
           <Button
             variant="subtle"
-            color="colorScheme"
+            color="dark"
             radius="md"
-            size="md"
+            size="lg"
             uppercase
             onClick={(e) => handleQuickAdd(e, 'Note')}
           >
+            <MaterialSymbolsAddNotes />
             Note
           </Button>
         </Flex>
