@@ -17,6 +17,7 @@ import FoodScreen from './screens/FoodScreen.jsx';
 import ExerciseScreen from './screens/ExerciseScreen.jsx';
 import ProfileSettingsScreen from './screens/ProfileSettingsScreen.jsx';
 import PrivateRoute from './components/PrivateRoutes.jsx';
+import DiaryScreen from './screens/DiaryScreen.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
         <Route path="food" element={<FoodScreen />} />
         <Route path="exercise" element={<ExerciseScreen />} />
         <Route path="settings/profile" element={<ProfileSettingsScreen />} />
+        <Route path="diary" element={<DiaryScreen />} />
       </Route>
     </Route>,
   ),
