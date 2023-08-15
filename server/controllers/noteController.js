@@ -5,9 +5,11 @@ import Note from '../models/noteModel.js';
 // route    POST /api/notes
 // access   Private
 const createNote = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
   const { content, tags } = req.body;
 
   const note = new Note({
+    user: userId,
     content,
     tags,
   });
