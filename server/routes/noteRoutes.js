@@ -1,11 +1,20 @@
 import express from 'express';
 const router = express.Router();
-import { createNote } from '../controllers/noteController.js';
+import {
+  createNote,
+  getUserNotes,
+  getNoteById,
+  updateNoteById,
+  deletedNoteById,
+} from '../controllers/noteController.js';
 import { protect } from '../middleware/authMiddleWare.js';
 
 router.post('/notes', protect, createNote);
-// router.get('/notes');
-// router.get('/notes/:id');
-// router.route('/notes/:id').put(protect, ).delete(protect, );
+router.get('/notes', protect, getUserNotes);
+router
+  .route('/notes/:id')
+  .get(protect, getNoteById)
+  .put(protect, updateNoteById)
+  .delete(protect, deletedNoteById);
 
 export default router;

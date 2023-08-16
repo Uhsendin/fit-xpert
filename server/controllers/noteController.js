@@ -8,18 +8,90 @@ const createNote = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { content, tags } = req.body;
 
+  if (!content) {
+    res.status(400).json({ error: 'Content is required for your note' });
+    return
+  }
+
   const note = new Note({
     user: userId,
     content,
     tags,
   });
 
-  try {
-    const savedNote = await note.save();
-    res.json(savedNote);
-  } catch (err) {
-    res.status(400).json({ err: 'Provide content for your note' });
-  }
+  const savedNote = await note.save();
+  res.json(savedNote);
 });
 
-export { createNote };
+// Desc   Get all notes
+// route  GET /api/notes
+// access Private
+const getUserNotes = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+
+  const notes = await Note.find({ user: userId });
+
+  res.json(notes);
+});
+
+// Desc   Get single note
+// route  GET /api/notes:id
+// access Private
+const getNoteById = asyncHandler(async (req, res) => {
+  const userId = req.user._id; // User ID from the JWT payload
+  const noteId = req.params.id; // Note ID from the URL parameter
+
+  const note = await Note.findOne({ _id: noteId, user: userId });
+
+  if (note === null) {
+    res.status(404);
+    throw new Error('Note not found');
+  }
+  res.json(note);
+});
+
+// Desc   Update single note
+// route  PUT /api/notes:id
+// access Private
+const updateNoteById = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const noteId = req.params.id;
+  const { content, tags } = req.body;
+  const updatedNote = await Note.findOneAndUpdate(
+    { _id: noteId, user: userId },
+    { content, tags },
+    { new: true },
+  );
+
+  if (updatedNote === null) {
+    res.status(404);
+    throw new Error('Note not found');
+  }
+
+  res.json(updatedNote);
+});
+
+// Desc   Delete single note
+// route  DELETE /api/notes:id
+// access Private
+const deletedNoteById = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const noteId = req.params.id;
+
+  const deleteNote = await Note.findOneAndDelete({ _id: noteId, user: userId });
+
+  if (deleteNote === null) {
+    res.status(404);
+    throw new Error('Note not found');
+  }
+
+  res.status(204).end();
+});
+
+export {
+  createNote,
+  getUserNotes,
+  getNoteById,
+  updateNoteById,
+  deletedNoteById,
+};
