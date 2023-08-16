@@ -1,7 +1,9 @@
-import { Box, Group, Button, createStyles, Text } from '@mantine/core';
+import { Box, Group, Button, createStyles, Text, Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { MaterialSymbolsAddNotes } from '../../assets/MaterialSymbolsAddNotes';
 import { MdiRun } from '../../assets/MdiRun';
 import { TwemojiRedApple } from '../../assets/TwemojiRedApple';
+import NoteModelContent from './NoteModelContent';
 import React from 'react';
 
 const useStyles = createStyles((theme) => ({
@@ -32,7 +34,13 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const handleQuickAdd = (e, type) => {
+  console.log(type);
+};
+
 const DiaryPanel = () => {
+  const [opened, { open, close }] = useDisclosure(false);
+
   const { classes } = useStyles();
   return (
     <>
@@ -70,7 +78,7 @@ const DiaryPanel = () => {
               size="md"
               uppercase
               compact
-              onClick={(e) => handleQuickAdd(e, 'Note')}
+              onClick={open}
             >
               <MaterialSymbolsAddNotes />
               Note
@@ -83,6 +91,11 @@ const DiaryPanel = () => {
           </Box>
         </Box>
       </section>
+      <NoteModelContent
+        opened={opened}
+        onClose={close}
+        title="Add Note To Diary"
+      />
     </>
   );
 };
