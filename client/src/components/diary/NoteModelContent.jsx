@@ -4,9 +4,12 @@ import {
   createStyles,
   Text,
   Button,
+  Loader,
   Center,
 } from '@mantine/core';
 import React, { useState } from 'react';
+import { useCreateNoteMutation } from '../../slices/noteApiSlice';
+import { toast } from 'react-toastify';
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -22,9 +25,30 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const NoteModelContent = ({ opened, onClose, title }) => {
+  const [isSaving, setIsSaving] = useState(false);
+  const [createNote] = useCreateNoteMutation();
   const { classes } = useStyles();
   const [textAreaValue, setTextAreaValue] = useState('');
   const charLimit = 1000;
+
+  const handleNoteBtn = async (e) => {
+    e.preventDefault();
+    try {
+      setIsSaving(true);
+      const res = await createNote({ content: textAreaValue }).unwrap();
+      setTextAreaValue('');
+      onClose();
+    } catch (err) {
+      toast.error(err?.data.error || err.error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleClose = () => {
+    onClose();
+    setTextAreaValue('');
+  };
 
   const handleTextAreaChange = (e) => {
     const value = e.target.value;
@@ -39,7 +63,7 @@ const NoteModelContent = ({ opened, onClose, title }) => {
       <Modal
         size="40rem"
         opened={opened}
-        onClose={onClose}
+        onClose={handleClose}
         title={<span className={classes.title}>{title}</span>}
       >
         <Textarea
@@ -56,8 +80,15 @@ const NoteModelContent = ({ opened, onClose, title }) => {
           {charCount}/{charLimit}
         </Text>
         <Center>
-          <Button className={classes.btn} variant="light" radius="lg" size="lg">
-            Save Note
+          <Button
+            type="submit"
+            onClick={handleNoteBtn}
+            className={classes.btn}
+            variant="light"
+            radius="lg"
+            size="lg"
+          >
+            {isSaving ? <Loader /> : 'Save Note'}
           </Button>
         </Center>
       </Modal>

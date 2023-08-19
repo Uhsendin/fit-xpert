@@ -1,4 +1,4 @@
-import { Box, Group, Button, createStyles, Text, Modal } from '@mantine/core';
+import { Box, Group, Button, createStyles, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MaterialSymbolsAddNotes } from '../../assets/MaterialSymbolsAddNotes';
 import { MdiRun } from '../../assets/MdiRun';
