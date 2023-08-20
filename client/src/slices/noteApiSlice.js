@@ -10,7 +10,13 @@ export const noteApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getNotes: builder.mutation({
+      query: () => ({
+        url: `${USERS_URL}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useCreateNoteMutation } = noteApiSlice;
+export const { useCreateNoteMutation, useGetNotesMutation } = noteApiSlice;

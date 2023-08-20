@@ -5,6 +5,7 @@ import { MdiRun } from '../../assets/MdiRun';
 import { TwemojiRedApple } from '../../assets/TwemojiRedApple';
 import NoteModelContent from './NoteModelContent';
 import React from 'react';
+import TableDiary from './TableDiary';
 
 const useStyles = createStyles((theme) => ({
   box: {
@@ -25,12 +26,7 @@ const useStyles = createStyles((theme) => ({
   boxOutline: {
     marginTop: theme.spacing.md,
     minHeight: '15rem',
-    border:
-      theme.colorScheme === 'dark'
-        ? 'solid 1px rgba(255, 255, 255, 0.1)'
-        : 'solid 1px rgba(0, 0, 0, .1)',
-    borderRadius: theme.radius.md,
-    padding: theme.spacing.lg,
+    padding: theme.spacing.xs,
   },
 }));
 
@@ -48,8 +44,8 @@ const DiaryPanel = () => {
         <Box className={classes.box}>
           <Group spacing="xs">
             <Button
-              variant="subtle"
-              color="dark"
+              variant="light"
+              color="colorScheme"
               radius="md"
               size="md"
               uppercase
@@ -60,8 +56,8 @@ const DiaryPanel = () => {
               Food
             </Button>
             <Button
-              variant="subtle"
-              color="dark"
+              variant="light"
+              color="colorScheme"
               radius="md"
               size="md"
               uppercase
@@ -72,8 +68,8 @@ const DiaryPanel = () => {
               Exercise
             </Button>
             <Button
-              variant="subtle"
-              color="dark"
+              variant="light"
+              color="colorScheme"
               radius="md"
               size="md"
               uppercase
@@ -85,9 +81,10 @@ const DiaryPanel = () => {
             </Button>
           </Group>
           <Box className={classes.boxOutline}>
-            <Text fw={500}>
-              Add food, exercise, or notes to display them in your diary.
-            </Text>
+            <TableDiary />
+            {/* <Text fw={500}> */}
+            {/* Add food, exercise, or notes to display them in your diary. */}
+            {/* </Text> */}
           </Box>
         </Box>
       </section>
