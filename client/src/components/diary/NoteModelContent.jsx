@@ -8,7 +8,6 @@ import {
   Center,
 } from '@mantine/core';
 import React, { useState } from 'react';
-import { useCreateNoteMutation } from '../../slices/noteApiSlice';
 import { toast } from 'react-toastify';
 
 const useStyles = createStyles((theme) => ({
@@ -26,7 +25,6 @@ const useStyles = createStyles((theme) => ({
 
 const NoteModelContent = ({ opened, onClose, title }) => {
   const [isSaving, setIsSaving] = useState(false);
-  const [createNote] = useCreateNoteMutation();
   const { classes } = useStyles();
   const [textAreaValue, setTextAreaValue] = useState('');
   const charLimit = 1000;
@@ -35,7 +33,7 @@ const NoteModelContent = ({ opened, onClose, title }) => {
     e.preventDefault();
     try {
       setIsSaving(true);
-      const res = await createNote({ content: textAreaValue }).unwrap();
+      // api call
       setTextAreaValue('');
       onClose();
     } catch (err) {
