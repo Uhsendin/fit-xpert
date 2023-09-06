@@ -17,6 +17,17 @@ export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
   }
 });
 
+export const addNewNote = createAsyncThunk(
+  'notes/addNewNote',
+  async (initialNote) => {
+    try {
+      const res = await axios.post(NOTES_URL, initialNote);
+      return res.data;
+    } catch (err) {
+      return err.response.data.error;
+    }
+  },
+);
 const notesSlice = createSlice({
   name: 'post',
   initialState,
@@ -33,6 +44,9 @@ const notesSlice = createSlice({
       .addCase(fetchNotes.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(addNewNote.fulfilled, (state, action) => {
+        state.notes.push(action.payload);
       });
   },
 });

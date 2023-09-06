@@ -9,6 +9,8 @@ import {
 } from '@mantine/core';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import { addNewNote } from '../../slices/notesSlice';
+import { useDispatch } from 'react-redux';
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -28,12 +30,13 @@ const NoteModelContent = ({ opened, onClose, title }) => {
   const { classes } = useStyles();
   const [textAreaValue, setTextAreaValue] = useState('');
   const charLimit = 1000;
+  const dispatch = useDispatch();
 
   const handleNoteBtn = async (e) => {
     e.preventDefault();
     try {
       setIsSaving(true);
-      // api call
+      dispatch(addNewNote({ content: textAreaValue }));
       setTextAreaValue('');
       onClose();
     } catch (err) {
@@ -85,6 +88,7 @@ const NoteModelContent = ({ opened, onClose, title }) => {
             variant="light"
             radius="lg"
             size="lg"
+            disabled={textAreaValue.length < 3}
           >
             {isSaving ? <Loader /> : 'Save Note'}
           </Button>
