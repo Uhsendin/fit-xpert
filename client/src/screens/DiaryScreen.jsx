@@ -1,7 +1,7 @@
 import React from 'react';
 import { MainHeader } from '../components/MainHeader';
 import { links } from '../constants/headerLinks';
-import { Container } from '@mantine/core';
+import { Container, Flex } from '@mantine/core';
 import Pagination from '../components/diary/Pagination';
 import DiaryPanel from '../components/diary/DiaryPanel';
 const DiaryScreen = () => {
@@ -10,8 +10,14 @@ const DiaryScreen = () => {
       <MainHeader links={links} />
       <Container fluid>
         <main>
-          <Pagination />
-          <DiaryPanel />
+          <Flex
+            direction={{ base: 'column', lg: 'row-reverse' }}
+            gap={{ base: '0', lg: 'md' }}
+            justify={{ lg: 'center' }}
+          >
+            <Pagination />
+            <DiaryPanel />
+          </Flex>
         </main>
       </Container>
     </>
