@@ -1,7 +1,9 @@
-import { Box, Group, createStyles } from '@mantine/core';
+import { Box, Group, createStyles, Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import React from 'react';
 import Arrow from '../../assets/Arrow';
 import CalendarToday from '../../assets/CalendarToday';
+import Calendar from './Calendar';
 const useStyles = createStyles((theme) => ({
   box: {
     backgroundColor:
@@ -52,6 +54,7 @@ const handleClicks = (e, type) => {
   console.log(type);
 };
 const Pagination = () => {
+  const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   return (
     <>
@@ -64,10 +67,7 @@ const Pagination = () => {
             >
               <Arrow />
             </span>
-            <Group
-              onClick={(event) => handleClicks(event, 'Calendar')}
-              className={classes.calendar}
-            >
+            <Group onClick={open} className={classes.calendar}>
               <CalendarToday />
               <span className={classes.date}>Today</span>
             </Group>
@@ -80,6 +80,9 @@ const Pagination = () => {
           </Group>
         </Box>
       </section>
+      <Modal opened={opened} onClose={close}>
+        <Calendar></Calendar>
+      </Modal>
     </>
   );
 };
