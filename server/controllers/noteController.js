@@ -10,7 +10,7 @@ const createNote = asyncHandler(async (req, res) => {
 
   if (!content) {
     res.status(400).json({ error: 'Content is required for your note' });
-    return
+    return;
   }
 
   const note = new Note({
@@ -31,6 +31,32 @@ const getUserNotes = asyncHandler(async (req, res) => {
 
   const notes = await Note.find({ user: userId });
 
+  res.json(notes);
+});
+
+// Desc Get all notes based on date range
+// route GET /api/notes:date
+// acces Private
+const getUserNotesByDate = asyncHandler(async (req, res) => {
+  const { date } = req.params;
+
+  const selectedDate = new Date(date);
+
+  const day = selectedDate.getDate().toString().padStart(2, '0');
+  const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+  const year = selectedDate.getFullYear();
+
+  let notes = await Note.find({
+    createdAt: {
+      $gte: new Date(`${year}-${month}-${day}T00:00:00.000Z`),
+      $lt: new Date(`${year}-${month}-${day}T23:59:59.999Z`),
+    },
+  });
+
+  if (notes === null) {
+    res.status(404);
+    throw new Error('Notes not found');
+  }
   res.json(notes);
 });
 
@@ -91,6 +117,7 @@ const deletedNoteById = asyncHandler(async (req, res) => {
 export {
   createNote,
   getUserNotes,
+  getUserNotesByDate,
   getNoteById,
   updateNoteById,
   deletedNoteById,
