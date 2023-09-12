@@ -17,7 +17,11 @@ function Calendar() {
 
   return (
     <Group position="center">
-      <DatePicker value={newDate} onChange={handleDateChange} />
+      <DatePicker
+        defaultDate={newDate}
+        value={newDate}
+        onChange={handleDateChange}
+      />
     </Group>
   );
 }

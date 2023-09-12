@@ -9,8 +9,14 @@ const dateSlice = createSlice({
     updateDate: (state, action) => {
       state.selectedDate = action.payload;
     },
+    incrementDate: (state) => {
+      state.selectedDate += 24 * 60 * 60 * 1000;
+    },
+    decrementDate: (state) => {
+      state.selectedDate -= 24 * 60 * 60 * 1000;
+    },
   },
 });
 
-export const { updateDate } = dateSlice.actions;
+export const { updateDate, incrementDate, decrementDate } = dateSlice.actions;
 export default dateSlice.reducer;

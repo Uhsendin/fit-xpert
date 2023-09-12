@@ -4,6 +4,9 @@ import React from 'react';
 import Arrow from '../../assets/Arrow';
 import CalendarToday from '../../assets/CalendarToday';
 import Calendar from './Calendar';
+import { useDispatch, useSelector } from 'react-redux';
+import { incrementDate, decrementDate } from '../../slices/dateSlice';
+
 const useStyles = createStyles((theme) => ({
   box: {
     backgroundColor:
@@ -50,12 +53,18 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const handleClicks = (e, type) => {
-  console.log(type);
-};
 const Pagination = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
+  const dispatch = useDispatch();
+  const handleClicks = (e, type) => {
+    if (type === 'Back') {
+      dispatch(decrementDate());
+    } else {
+      dispatch(incrementDate());
+    }
+  };
+
   return (
     <>
       <section>
