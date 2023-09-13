@@ -40,7 +40,7 @@ const getUserNotes = asyncHandler(async (req, res) => {
 const getUserNotesByDate = asyncHandler(async (req, res) => {
   const { date } = req.params;
 
-  const selectedDate = new Date(date);
+  const selectedDate = new Date(Number(date));
 
   const day = selectedDate.getDate().toString().padStart(2, '0');
   const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
