@@ -8,9 +8,9 @@ const initialState = {
   error: null,
 };
 
-export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
+export const fetchNotes = createAsyncThunk('notes/fetchNotes', async (date) => {
   try {
-    const res = await axios.get(NOTES_URL);
+    const res = await axios.get(NOTES_URL + `/${date}`);
     return [...res.data];
   } catch (err) {
     return err.message;
@@ -28,6 +28,7 @@ export const addNewNote = createAsyncThunk(
     }
   },
 );
+
 const notesSlice = createSlice({
   name: 'post',
   initialState,

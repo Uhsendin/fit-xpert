@@ -1,14 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Table, createStyles, em } from '@mantine/core';
 import MaterialSymbolsAddNotes from '../../assets/MaterialSymbolsAddNotes';
-import {
-  selectAllNotes,
-  getNotesStatus,
-  getNotesError,
-  fetchNotes,
-} from '../../slices/notesSlice';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { selectAllNotes } from '../../slices/notesSlice';
+import { useSelector } from 'react-redux';
 
 const useStyles = createStyles((theme) => ({
   contentWrapper: {
@@ -23,18 +17,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const TableDiary = () => {
-  const dispatch = useDispatch();
-  const effectRan = useRef(false);
   const notes = useSelector(selectAllNotes);
-  const notesStatus = useSelector(getNotesStatus);
-  const notesError = useSelector(getNotesError);
-
-  useEffect(() => {
-    if (notesStatus === 'idle' && !effectRan.current) {
-      dispatch(fetchNotes());
-    }
-    return () => (effectRan.current = true);
-  }, [notesStatus, dispatch]);
 
   const { classes } = useStyles();
   const rows = notes.map((element) => (
