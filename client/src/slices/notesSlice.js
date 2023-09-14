@@ -32,7 +32,11 @@ export const addNewNote = createAsyncThunk(
 const notesSlice = createSlice({
   name: 'post',
   initialState,
-  reducers: {},
+  reducers: {
+    resetNotes: (state) => {
+      state.notes = [];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchNotes.pending, (state, action) => {
@@ -55,5 +59,6 @@ const notesSlice = createSlice({
 export const selectAllNotes = (state) => state.notes.notes;
 export const getNotesStatus = (state) => state.notes.status;
 export const getNotesError = (state) => state.notes.error;
+export const { resetNotes } = notesSlice.actions;
 
 export default notesSlice.reducer;

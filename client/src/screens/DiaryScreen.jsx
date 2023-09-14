@@ -5,7 +5,7 @@ import { Container, Flex } from '@mantine/core';
 import Pagination from '../components/diary/Pagination';
 import DiaryPanel from '../components/diary/DiaryPanel';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNotes, getNotesStatus } from '../slices/notesSlice';
+import { fetchNotes, getNotesStatus, resetNotes } from '../slices/notesSlice';
 
 const DiaryScreen = () => {
   const isRan = useRef(false);
@@ -19,6 +19,7 @@ const DiaryScreen = () => {
       dispatch(fetchNotes(currentDate));
     }
     if (selectedDate !== currentDate) {
+      dispatch(resetNotes());
       dispatch(fetchNotes(currentDate));
       setSelectedDate(currentDate);
     }
