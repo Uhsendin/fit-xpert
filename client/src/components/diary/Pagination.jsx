@@ -4,7 +4,7 @@ import React from 'react';
 import Arrow from '../../assets/Arrow';
 import CalendarToday from '../../assets/CalendarToday';
 import Calendar from './Calendar';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { incrementDate, decrementDate } from '../../slices/dateSlice';
 
 const useStyles = createStyles((theme) => ({
@@ -57,6 +57,13 @@ const Pagination = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const { classes } = useStyles();
   const dispatch = useDispatch();
+  const currentDate = useSelector((state) => state.date.selectedDate);
+  const date = new Date(currentDate);
+  const month = date.toLocaleString('default', { month: 'short' });
+  const day = date.getDate();
+  const isToday = date.toDateString() === new Date().toDateString();
+
+  const formattedDate = isToday ? 'Today' : `${month} ${day}`;
 
   const handleClicks = (e, type) => {
     if (type === 'Back') {
@@ -79,7 +86,7 @@ const Pagination = () => {
             </span>
             <Group onClick={open} className={classes.calendar}>
               <CalendarToday />
-              <span className={classes.date}>Today</span>
+              <span className={classes.date}>{formattedDate}</span>
             </Group>
             <span
               onClick={(event) => handleClicks(event, 'Forward')}
