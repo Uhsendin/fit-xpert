@@ -59,6 +59,8 @@ const notesSlice = createSlice({
 export const selectAllNotes = (state) => state.notes.notes;
 export const getNotesStatus = (state) => state.notes.status;
 export const getNotesError = (state) => state.notes.error;
+export const selectNoteById = (state, noteId) =>
+  state.notes.notes.find((note) => note._id === noteId);
 export const { resetNotes } = notesSlice.actions;
 
 export default notesSlice.reducer;
