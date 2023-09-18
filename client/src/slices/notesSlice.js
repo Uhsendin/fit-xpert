@@ -29,6 +29,19 @@ export const addNewNote = createAsyncThunk(
   },
 );
 
+export const updateNote = createAsyncThunk(
+  'notes/updateNote',
+  async (initialNote) => {
+    const { id } = initialNote;
+    try {
+      const res = await axios.put(NOTES_URL + `/${id}`, initialNote);
+      return res.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
+);
+
 const notesSlice = createSlice({
   name: 'post',
   initialState,
@@ -52,6 +65,18 @@ const notesSlice = createSlice({
       })
       .addCase(addNewNote.fulfilled, (state, action) => {
         state.notes.push(action.payload);
+      })
+      .addCase(updateNote.fulfilled, (state, action) => {
+        if (!action.payload?._id) {
+          console.log('update could not complete');
+          console.log(action.payload);
+          return;
+        }
+        const { _id } = action.payload;
+        const updatedNotes = state.notes.map((note) =>
+          note._id === _id ? action.payload : note,
+        );
+        state.notes = updatedNotes;
       });
   },
 });
