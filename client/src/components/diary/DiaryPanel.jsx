@@ -18,7 +18,9 @@ const useStyles = createStyles((theme) => ({
 
     padding: theme.spacing.sm,
     minHeight: '15rem',
-    maxWidth: '55rem',
+    '@media (min-width: 1200px)': {
+      width: '55rem',
+    },
     marginTop: theme.spacing.xl,
     marginDown: theme.spacing.xl,
     borderRadius: theme.radius.md,
