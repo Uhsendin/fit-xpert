@@ -6,6 +6,7 @@ import {
   Button,
   Loader,
   Center,
+  Group,
 } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -27,6 +28,7 @@ const useStyles = createStyles((theme) => ({
 
 const UpdateNoteModel = ({ opened, onClose, title, noteId }) => {
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { classes } = useStyles();
   const [textAreaValue, setTextAreaValue] = useState('');
   const charLimit = 1000;
@@ -40,7 +42,7 @@ const UpdateNoteModel = ({ opened, onClose, title, noteId }) => {
     }
   }, [noteId]);
 
-  const handleNoteBtn = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       setIsSaving(true);
@@ -51,6 +53,12 @@ const UpdateNoteModel = ({ opened, onClose, title, noteId }) => {
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    console.log('delete a note');
+    //note should be delete in this function
   };
 
   const handleClose = () => {
@@ -88,17 +96,30 @@ const UpdateNoteModel = ({ opened, onClose, title, noteId }) => {
           {charCount}/{charLimit}
         </Text>
         <Center>
-          <Button
-            type="submit"
-            onClick={handleNoteBtn}
-            className={classes.btn}
-            variant="light"
-            radius="lg"
-            size="lg"
-            disabled={textAreaValue.length < 3}
-          >
-            {isSaving ? <Loader /> : 'Update Note'}
-          </Button>
+          <Group>
+            <Button
+              type="submit"
+              onClick={handleDelete}
+              className={classes.btn}
+              variant="light"
+              radius="lg"
+              size="lg"
+              color="red"
+            >
+              {isDeleting ? <Loader color="red" /> : 'Delete Note'}
+            </Button>
+            <Button
+              type="submit"
+              onClick={handleUpdate}
+              className={classes.btn}
+              variant="light"
+              radius="lg"
+              size="lg"
+              disabled={textAreaValue.length < 3}
+            >
+              {isSaving ? <Loader /> : 'Update Note'}
+            </Button>
+          </Group>
         </Center>
       </Modal>
     </>
