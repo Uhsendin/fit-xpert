@@ -16,6 +16,11 @@ const useStyles = createStyles((theme) => ({
       textOverflow: 'ellipsis',
     },
   },
+  tr: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
 }));
 
 const TableDiary = () => {
@@ -27,7 +32,6 @@ const TableDiary = () => {
 
   useEffect(() => {
     if (isRowClicked) {
-      console.log(selectedNoteId);
       setIsRowClicked(false);
     }
   }, [selectedNoteId]);
@@ -39,7 +43,11 @@ const TableDiary = () => {
   };
 
   const rows = notes.map((element) => (
-    <tr key={element._id} onClick={(e) => rowClick(e, element._id)}>
+    <tr
+      className={classes.tr}
+      key={element._id}
+      onClick={(e) => rowClick(e, element._id)}
+    >
       <td>
         <MaterialSymbolsAddNotes />
       </td>

@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectNoteById } from '../../slices/notesSlice';
+import { selectNoteById, updateNote } from '../../slices/notesSlice';
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -44,8 +44,7 @@ const UpdateNoteModel = ({ opened, onClose, title, noteId }) => {
     e.preventDefault();
     try {
       setIsSaving(true);
-      // make a call
-      setTextAreaValue('');
+      dispatch(updateNote({ id: note._id, content: textAreaValue }));
       onClose();
     } catch (err) {
       toast.error(err?.data.error || err.error);
