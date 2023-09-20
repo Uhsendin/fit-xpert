@@ -6,6 +6,7 @@ import { TwemojiRedApple } from '../../assets/TwemojiRedApple';
 import NoteModelContent from './NoteModelContent';
 import React from 'react';
 import TableDiary from './TableDiary';
+import { useSelector } from 'react-redux';
 
 const useStyles = createStyles((theme) => ({
   box: {
@@ -39,6 +40,9 @@ const handleQuickAdd = (e, type) => {
 
 const DiaryPanel = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const currentDate = useSelector((state) => state.date.selectedDate);
+  const date = new Date(currentDate);
+  const isToday = date.toDateString() === new Date().toDateString();
 
   const { classes } = useStyles();
   return (
@@ -54,6 +58,7 @@ const DiaryPanel = () => {
               uppercase
               compact
               onClick={(e) => handleQuickAdd(e, 'Food')}
+              disabled={isToday ? false : true}
             >
               <TwemojiRedApple />
               Food
@@ -66,6 +71,7 @@ const DiaryPanel = () => {
               uppercase
               compact
               onClick={(e) => handleQuickAdd(e, 'Exercise')}
+              disabled={isToday ? false : true}
             >
               <MdiRun />
               Exercise
@@ -78,6 +84,7 @@ const DiaryPanel = () => {
               uppercase
               compact
               onClick={open}
+              disabled={isToday ? false : true}
             >
               <MaterialSymbolsAddNotes />
               Note
