@@ -42,6 +42,19 @@ export const updateNote = createAsyncThunk(
   },
 );
 
+export const deleteNote = createAsyncThunk(
+  'notes/deleteNote',
+  async (initialNote) => {
+    const { id } = initialNote;
+    try {
+      const res = await axios.delete(NOTES_URL + `/${id}`);
+      return { _id: id };
+    } catch (err) {
+      return err.message;
+    }
+  },
+);
+
 const notesSlice = createSlice({
   name: 'post',
   initialState,
@@ -77,6 +90,16 @@ const notesSlice = createSlice({
           note._id === _id ? action.payload : note,
         );
         state.notes = updatedNotes;
+      })
+      .addCase(deleteNote.fulfilled, (state, action) => {
+        if (!action.payload?._id) {
+          console.log('Delete could not complete');
+          console.log(action.payload);
+          return;
+        }
+        const { _id } = action.payload;
+        const notes = state.notes.filter((note) => note._id !== _id);
+        state.notes = notes;
       });
   },
 });
