@@ -11,7 +11,11 @@ import {
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectNoteById, updateNote } from '../../slices/notesSlice';
+import {
+  deleteNote,
+  selectNoteById,
+  updateNote,
+} from '../../slices/notesSlice';
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -57,8 +61,15 @@ const UpdateNoteModel = ({ opened, onClose, title, noteId }) => {
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    console.log('delete a note');
-    //note should be delete in this function
+    try {
+      setIsDeleting(true);
+      dispatch(deleteNote({ id: note._id }));
+      onClose();
+    } catch (err) {
+      toast.error(err?.data.error || err.error);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   const handleClose = () => {
