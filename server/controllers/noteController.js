@@ -39,7 +39,7 @@ const getUserNotes = asyncHandler(async (req, res) => {
 // acces Private
 const getUserNotesByDate = asyncHandler(async (req, res) => {
   const { date } = req.params;
-
+  const userId = req.user._id;
   const selectedDate = new Date(Number(date));
 
   const day = selectedDate.getDate().toString().padStart(2, '0');
@@ -51,6 +51,7 @@ const getUserNotesByDate = asyncHandler(async (req, res) => {
       $gte: new Date(`${year}-${month}-${day}T00:00:00.000Z`),
       $lt: new Date(`${year}-${month}-${day}T23:59:59.999Z`),
     },
+    user: userId,
   });
 
   if (notes === null) {
