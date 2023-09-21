@@ -7,6 +7,7 @@ import NoteModelContent from './NoteModelContent';
 import React from 'react';
 import TableDiary from './TableDiary';
 import { useSelector } from 'react-redux';
+import FoodModel from './FoodModel';
 
 const useStyles = createStyles((theme) => ({
   box: {
@@ -39,7 +40,11 @@ const handleQuickAdd = (e, type) => {
 };
 
 const DiaryPanel = () => {
-  const [opened, { open, close }] = useDisclosure(false);
+  const [noteOpened, { open: openNote, close: closeNote }] =
+    useDisclosure(false);
+  const [foodOpened, { open: openFood, close: closeFood }] =
+    useDisclosure(false);
+
   const currentDate = useSelector((state) => state.date.selectedDate);
   const date = new Date(currentDate);
   const isToday = date.toDateString() === new Date().toDateString();
@@ -57,7 +62,7 @@ const DiaryPanel = () => {
               size="md"
               uppercase
               compact
-              onClick={(e) => handleQuickAdd(e, 'Food')}
+              onClick={openFood}
               disabled={isToday ? false : true}
             >
               <TwemojiRedApple />
@@ -83,7 +88,7 @@ const DiaryPanel = () => {
               size="md"
               uppercase
               compact
-              onClick={open}
+              onClick={openNote}
               disabled={isToday ? false : true}
             >
               <MaterialSymbolsAddNotes />
@@ -99,10 +104,11 @@ const DiaryPanel = () => {
         </Box>
       </section>
       <NoteModelContent
-        opened={opened}
-        onClose={close}
+        opened={noteOpened}
+        onClose={closeNote}
         title="Add Note To Diary"
       />
+      <FoodModel opened={foodOpened} onClose={closeFood} />
     </>
   );
 };
