@@ -1,7 +1,7 @@
 import { Modal, createStyles } from '@mantine/core';
 import React from 'react';
 import SearchInput from './SearchInput';
-import FoodTable from './FoodTable';
+import FoodTableTabs from './FoodTableTabs';
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -21,7 +21,7 @@ const FoodModel = ({ opened, onClose }) => {
         title={<span className={classes.title}>Add Food to Diary</span>}
       >
         <SearchInput />
-        <FoodTable />
+        <FoodTableTabs />
       </Modal>
     </>
   );
