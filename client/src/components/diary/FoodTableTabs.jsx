@@ -1,5 +1,5 @@
 import { Tabs, createStyles } from '@mantine/core';
-import React from 'react';
+import React, { useState } from 'react';
 import FoodTable from './FoodTable';
 
 const useStyles = createStyles((theme) => ({
@@ -34,9 +34,10 @@ const dummyDataCus = [
 ];
 
 const FoodTableTabs = () => {
+  const [activeTab, setActiveTab] = useState('all');
   const { classes } = useStyles();
   return (
-    <Tabs defaultValue="all">
+    <Tabs value={activeTab} onTabChange={setActiveTab}>
       <Tabs.List grow className={classes.tabList}>
         <Tabs.Tab value="all">All</Tabs.Tab>
         <Tabs.Tab value="favorites">Favorites</Tabs.Tab>

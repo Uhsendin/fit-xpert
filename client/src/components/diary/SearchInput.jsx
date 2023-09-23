@@ -1,6 +1,9 @@
 import { Button, Flex, TextInput, createStyles } from '@mantine/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SearchIcon } from '../../assets/SearchIcon';
+import { useDebouncedState } from '@mantine/hooks';
+import { useDispatch } from 'react-redux';
+import { fetchFoodBySearch } from '../../slices/foodDataBaseSlice';
 const useStyles = createStyles((theme) => ({
   textInput: {
     width: '100%',
@@ -11,6 +14,11 @@ const useStyles = createStyles((theme) => ({
 }));
 const SearchInput = () => {
   const { classes } = useStyles();
+  const [searchValue, setSearchValue] = useDebouncedState('', 500);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchFoodBySearch(searchValue));
+  }, [searchValue]);
   return (
     <Flex>
       <TextInput
@@ -19,6 +27,7 @@ const SearchInput = () => {
         variant="default"
         placeholder="Search for all foods and recipes...."
         className={classes.textInput}
+        onChange={(e) => setSearchValue(e.currentTarget.value)}
       />
       <Button variant="subtle" className={classes.searchBtn}>
         SEARCH
