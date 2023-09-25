@@ -16,9 +16,8 @@ export const fetchFoodBySearch = createAsyncThunk(
       const res = await axios.get(
         FOOD_BASE_URL +
         `search?api_key=${import.meta.env.VITE_FOOD_DATA_API_KEY
-        }&query=${encodedQuery}`,
+        }&query=${encodedQuery}&dataType=Branded,Foundation,Survey,SR%20Legacy`,
       );
-      console.log(res.data);
       return res.data;
     } catch (err) {
       return err.message;
@@ -29,7 +28,11 @@ export const fetchFoodBySearch = createAsyncThunk(
 const foodSlice = createSlice({
   name: 'food',
   initialState,
-  reducers: {},
+  reducers: {
+    clearFoods: (state) => {
+      state.foods = [];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchFoodBySearch.pending, (state, action) => {
@@ -46,5 +49,7 @@ const foodSlice = createSlice({
       });
   },
 });
+
+export const { clearFoods } = foodSlice.actions;
 
 export default foodSlice.reducer;

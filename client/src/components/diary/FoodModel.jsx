@@ -1,5 +1,5 @@
 import { Modal, createStyles } from '@mantine/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import SearchInput from './SearchInput';
 import FoodTableTabs from './FoodTableTabs';
 

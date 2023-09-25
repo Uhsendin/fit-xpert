@@ -15,8 +15,8 @@ const FoodTable = ({ tableData }) => {
   const { classes } = useStyles();
 
   const rows = tableData.map((element) => (
-    <tr key={element.name} className={classes.tableRow}>
-      <td>{element.name}</td>
+    <tr key={element.fdcId} className={classes.tableRow}>
+      <td>{element.description}</td>
     </tr>
   ));
 
