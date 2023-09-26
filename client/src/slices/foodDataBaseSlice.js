@@ -49,7 +49,8 @@ const foodSlice = createSlice({
       });
   },
 });
-
+export const selectFoodById = (state, foodId) =>
+  state.food.foods[0].foods.find((food) => food.fdcId === foodId);
 export const { clearFoods } = foodSlice.actions;
 
 export default foodSlice.reducer;

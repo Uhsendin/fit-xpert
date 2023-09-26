@@ -1,7 +1,9 @@
 import { Modal, createStyles } from '@mantine/core';
-import React, { useEffect } from 'react';
+import React from 'react';
 import SearchInput from './SearchInput';
 import FoodTableTabs from './FoodTableTabs';
+import { useDispatch } from 'react-redux';
+import { clearFoods } from '../../slices/foodDataBaseSlice';
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -11,13 +13,18 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const FoodModel = ({ opened, onClose }) => {
+  const dispatch = useDispatch();
+  const handleClose = () => {
+    onClose();
+    dispatch(clearFoods());
+  };
   const { classes } = useStyles();
   return (
     <>
       <Modal
         size="60rem"
         opened={opened}
-        onClose={onClose}
+        onClose={handleClose}
         title={<span className={classes.title}>Add Food to Diary</span>}
       >
         <SearchInput />
