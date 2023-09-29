@@ -3,11 +3,11 @@ import { useDisclosure } from '@mantine/hooks';
 import { MaterialSymbolsAddNotes } from '../../assets/MaterialSymbolsAddNotes';
 import { MdiRun } from '../../assets/MdiRun';
 import { TwemojiRedApple } from '../../assets/TwemojiRedApple';
-import NoteModelContent from './NoteModelContent';
+import NoteModelContent from './note/NoteModelContent';
 import React from 'react';
-import TableDiary from './TableDiary';
+import TableDiary from './note/TableDiary';
 import { useSelector } from 'react-redux';
-import FoodModel from './FoodModel';
+import FoodModel from './food/FoodModel';
 
 const useStyles = createStyles((theme) => ({
   box: {

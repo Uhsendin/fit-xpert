@@ -3,7 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import React from 'react';
 import Arrow from '../../assets/Arrow';
 import CalendarToday from '../../assets/CalendarToday';
-import Calendar from './Calendar';
+import Calendar from './note/Calendar';
 import { useDispatch, useSelector } from 'react-redux';
 import { incrementDate, decrementDate } from '../../slices/dateSlice';
 
