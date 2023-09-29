@@ -9,7 +9,7 @@ import {
 } from '@mantine/core';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { addNewNote } from '../../slices/notesSlice';
+import { addNewNote } from '../../../slices/notesSlice';
 import { useDispatch } from 'react-redux';
 
 const useStyles = createStyles((theme) => ({

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Table, createStyles, em } from '@mantine/core';
-import MaterialSymbolsAddNotes from '../../assets/MaterialSymbolsAddNotes';
-import { selectAllNotes, selectNoteById } from '../../slices/notesSlice';
+import MaterialSymbolsAddNotes from '../../../assets/MaterialSymbolsAddNotes';
+import { selectAllNotes, selectNoteById } from '../../../slices/notesSlice';
 import { useSelector } from 'react-redux';
 import UpdateNoteModel from './UpdateNoteModel';
 import { useDisclosure } from '@mantine/hooks';

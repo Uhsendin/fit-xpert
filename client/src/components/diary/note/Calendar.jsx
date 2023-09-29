@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Group } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { DatePicker } from '@mantine/dates';
-import { updateDate } from '../../slices/dateSlice';
+import { updateDate } from '../../../slices/dateSlice';
 
 function Calendar() {
   const dispatch = useDispatch();

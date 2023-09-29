@@ -164,7 +164,6 @@ const FoodSummaryPanel = () => {
                 />
                 <Select defaultValue="1g" data={dummyArr} />
               </Group>
-              {/* <Text>fdfasdfasdf</Text> */}
             </Stack>
           </Paper>
         </Grid.Col>

@@ -1,9 +1,9 @@
 import { Button, Flex, TextInput, createStyles } from '@mantine/core';
 import React, { useEffect } from 'react';
-import { SearchIcon } from '../../assets/SearchIcon';
+import { SearchIcon } from '../../../assets/SearchIcon';
 import { useDebouncedState } from '@mantine/hooks';
 import { useDispatch } from 'react-redux';
-import { clearFoods, fetchFoodBySearch } from '../../slices/foodDataBaseSlice';
+import { clearFoods, fetchFoodBySearch } from '../../../slices/foodDataBaseSlice';
 const useStyles = createStyles((theme) => ({
   textInput: {
     width: '100%',

@@ -15,7 +15,7 @@ import {
   deleteNote,
   selectNoteById,
   updateNote,
-} from '../../slices/notesSlice';
+} from '../../../slices/notesSlice';
 
 const useStyles = createStyles((theme) => ({
   title: {

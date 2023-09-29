@@ -3,7 +3,7 @@ import React from 'react';
 import SearchInput from './SearchInput';
 import FoodTableTabs from './FoodTableTabs';
 import { useDispatch } from 'react-redux';
-import { clearFoods } from '../../slices/foodDataBaseSlice';
+import { clearFoods } from '../../../slices/foodDataBaseSlice';
 
 const useStyles = createStyles((theme) => ({
   title: {
