@@ -55,8 +55,35 @@ const dummyVals = [
   { value: 15, color: '#ea3b07' },
 ];
 
-const FoodRingLog = () => {
+const FoodRingLog = ({ foodById }) => {
   const { classes } = useStyles();
+  const protein = foodById.foodNutrients.find(
+    (nutrient) => nutrient.nutrientName === 'Protein',
+  );
+  const carbs = foodById.foodNutrients.find(
+    (nutrient) => nutrient.nutrientName === 'Carbohydrate, by difference',
+  );
+  const fat = foodById.foodNutrients.find(
+    (nutrient) => nutrient.nutrientName === 'Total lipid (fat)',
+  );
+  const kcal = foodById.foodNutrients.find(
+    (nutrient) => nutrient.nutrientName === 'Energy',
+  );
+
+  const total = protein.value + carbs.value + fat.value;
+
+  const proteinPercentage = (protein.value / total) * 100;
+  const carbsPercentage = (carbs.value / total) * 100;
+  const fatPercentage = (fat.value / total) * 100;
+
+  const vals = [
+    { value: carbsPercentage, color: '#1ccad7' },
+    { value: 1, color: 'white' }, // Gap
+    { value: proteinPercentage, color: '#44d07b' },
+    { value: 1, color: 'white' }, // Gap
+    { value: fatPercentage, color: '#ea3b07' },
+    { value: 1, color: 'white' }, // Gap
+  ];
   return (
     <>
       <section>
@@ -64,13 +91,13 @@ const FoodRingLog = () => {
           <Paper shadow="xs" p="sm" withBorder className={classes.serving}>
             <Flex>
               <RingProgress
-                sections={dummyVals}
+                sections={vals}
                 size={115}
                 thickness={10}
                 label={
                   <>
                     <Text fw={500} className={classes.text}>
-                      150
+                      {kcal.value}
                     </Text>
                     <Text c="dimmed" className={classes.text}>
                       kcal
@@ -82,21 +109,31 @@ const FoodRingLog = () => {
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.protein}`}></div>
                   <Text>
-                    Protein: 0.1g (
-                    <span className={classes.proteinText}>12.9%</span>)
+                    Protein: {protein.value}g (
+                    <span className={classes.proteinText}>
+                      {proteinPercentage.toFixed(2)}%
+                    </span>
+                    )
                   </Text>
                 </Flex>
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.carbs}`}></div>
                   <Text>
-                    Net Carbs: 0.5g (
-                    <span className={classes.carbsText}>77.4%</span>)
+                    Net Carbs: {carbs.value}g (
+                    <span className={classes.carbsText}>
+                      {carbsPercentage.toFixed(2)}%
+                    </span>
+                    )
                   </Text>
                 </Flex>
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.fat}`}></div>
                   <Text>
-                    Fat: 0.0g (<span className={classes.fatText}>9.7%</span>)
+                    Fat: {fat.value}g (
+                    <span className={classes.fatText}>
+                      {fatPercentage.toFixed(2)}%
+                    </span>
+                    )
                   </Text>
                 </Flex>
               </Stack>

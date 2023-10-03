@@ -9,31 +9,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const dummyDataAll = [
-  {
-    position: 6,
-    mass: 12.011,
-    symbol: 'C',
-    name: 'this is the all table this is the all table',
-  },
-];
-const dummyDataFav = [
-  {
-    position: 6,
-    mass: 12.011,
-    symbol: 'C',
-    name: 'This the favorite table this is the favorite table',
-  },
-];
-const dummyDataCus = [
-  {
-    position: 6,
-    mass: 12.011,
-    symbol: 'C',
-    name: 'this is the custom table this is the custom table',
-  },
-];
-
 const FoodTableTabs = () => {
   const foodListSearch = useSelector((state) => state.food.foods);
   const [activeTab, setActiveTab] = useState('all');

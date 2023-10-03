@@ -25,10 +25,10 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const FoodSummaryPanel = () => {
+const FoodSummaryPanel = ({ foodId }) => {
   const { classes } = useStyles();
   const [servingNum, setServingNum] = useState(1);
-
+  const { description } = foodId;
   const dummyArr = [
     { value: '1g', label: 'g' },
     { value: '4g', label: 'tsp, chopped - 4g' },
@@ -37,10 +37,10 @@ const FoodSummaryPanel = () => {
 
   return (
     <>
-      <Text className={classes.text}>Food Desc</Text>
+      <Text className={classes.text}>{description}</Text>
       <Grid grow gutter="xs">
         <Grid.Col span={6}>
-          <FoodRingLog />
+          <FoodRingLog foodById={foodId} />
         </Grid.Col>
 
         <Grid.Col span={6}>

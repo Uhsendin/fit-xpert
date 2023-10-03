@@ -1,6 +1,8 @@
 import { Table, createStyles } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 import FoodSummaryPanel from './FoodSummaryPanel';
+import { useSelector } from 'react-redux';
+import { selectFoodById } from '../../../slices/foodDataBaseSlice';
 
 const useStyles = createStyles((theme) => ({
   tableRow: {
@@ -9,23 +11,24 @@ const useStyles = createStyles((theme) => ({
   tableWrapper: {
     overflowX: 'auto',
     // maxHeight: '650px',
-    maxHeight: '450px',
+    maxHeight: '400px',
   },
 }));
 
 const FoodTable = ({ tableData }) => {
-  const [selectedFoodById, setSelectedFoodById] = useState(null);
+  const [FoodId, setFoodId] = useState(null);
   const [isRowClicked, setIsRowClicked] = useState(false);
 
   const rowClick = (e, id) => {
     if (!isRowClicked) {
       setIsRowClicked(false);
     }
-    setSelectedFoodById(id);
+    setFoodId(id);
     setIsRowClicked(true);
   };
   const { classes } = useStyles();
 
+  const food = useSelector((state) => selectFoodById(state, FoodId));
   const rows = tableData.map((element) => (
     <tr
       key={element.fdcId}
@@ -48,7 +51,7 @@ const FoodTable = ({ tableData }) => {
           <tbody>{rows}</tbody>
         </Table>
       </div>
-      {isRowClicked && <FoodSummaryPanel />}
+      {isRowClicked && <FoodSummaryPanel foodId={food} />}
     </>
   );
 };
