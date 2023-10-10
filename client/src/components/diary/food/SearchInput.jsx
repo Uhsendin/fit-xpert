@@ -3,7 +3,10 @@ import React, { useEffect } from 'react';
 import { SearchIcon } from '../../../assets/SearchIcon';
 import { useDebouncedState } from '@mantine/hooks';
 import { useDispatch } from 'react-redux';
-import { clearFoods, fetchFoodBySearch } from '../../../slices/foodDataBaseSlice';
+import {
+  clearFoods,
+  fetchFoodBySearch,
+} from '../../../slices/foodDataBaseSlice';
 const useStyles = createStyles((theme) => ({
   textInput: {
     width: '100%',
@@ -14,7 +17,7 @@ const useStyles = createStyles((theme) => ({
 }));
 const SearchInput = () => {
   const { classes } = useStyles();
-  const [searchValue, setSearchValue] = useDebouncedState('', 500);
+  const [searchValue, setSearchValue] = useDebouncedState('', 300);
   const dispatch = useDispatch();
 
   useEffect(() => {

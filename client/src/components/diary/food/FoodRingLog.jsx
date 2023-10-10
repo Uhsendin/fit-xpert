@@ -49,12 +49,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const dummyVals = [
-  { value: 40, color: '#1ccad7' },
-  { value: 25, color: '#44d07b' },
-  { value: 15, color: '#ea3b07' },
-];
-
 const FoodRingLog = ({ foodById }) => {
   const { classes } = useStyles();
   const protein = foodById.foodNutrients.find(

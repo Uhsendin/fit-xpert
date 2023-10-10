@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-const FOOD_BASE_URL = 'https://api.nal.usda.gov/fdc/v1/foods/';
+const FOOD_BASE_URL_SEARCH = 'https://api.nal.usda.gov/fdc/v1/foods/';
+const FOOD_BASE_URL_ID = 'https://api.nal.usda.gov/fdc/v1/food/';
 
 const initialState = {
   foods: [],
@@ -14,7 +15,7 @@ export const fetchFoodBySearch = createAsyncThunk(
     const encodedQuery = encodeURIComponent(query);
     try {
       const res = await axios.get(
-        FOOD_BASE_URL +
+        FOOD_BASE_URL_SEARCH +
         `search?api_key=${import.meta.env.VITE_FOOD_DATA_API_KEY
         }&query=${encodedQuery}&dataType=Branded,Foundation,Survey,SR%20Legacy`,
       );
@@ -24,6 +25,20 @@ export const fetchFoodBySearch = createAsyncThunk(
     }
   },
 );
+
+export const fetchFoodById = createAsyncThunk('food/id', async (query) => {
+  try {
+    const res = await axios.get(
+      FOOD_BASE_URL_ID +
+      query +
+      '?nutrients=203&nutrients=204&nutrients=205' +
+      `&api_key=${import.meta.env.VITE_FOOD_DATA_API_KEY}`,
+    );
+    return res.data;
+  } catch (err) {
+    return err.message;
+  }
+});
 
 const foodSlice = createSlice({
   name: 'food',
@@ -44,6 +59,18 @@ const foodSlice = createSlice({
         state.foods = state.foods.concat(action.payload);
       })
       .addCase(fetchFoodBySearch.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchFoodById.pending, (state, action) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchFoodById.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        console.log(action.payload);
+      })
+      .addCase(fetchFoodById.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
