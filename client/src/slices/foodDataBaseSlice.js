@@ -16,8 +16,8 @@ export const fetchFoodBySearch = createAsyncThunk(
     try {
       const res = await axios.get(
         FOOD_BASE_URL_SEARCH +
-        `search?api_key=${import.meta.env.VITE_FOOD_DATA_API_KEY
-        }&query=${encodedQuery}&dataType=Branded,Foundation,Survey,SR%20Legacy`,
+          `search?&query=${encodedQuery}&dataType=Branded,Foundation,Survey (FNDDS),SR Legacy&pageSize=50&pageNumber=1&requireAllWords=true
+&sortOrder=asc&api_key=${import.meta.env.VITE_FOOD_DATA_API_KEY}`,
       );
       return res.data;
     } catch (err) {
@@ -30,9 +30,9 @@ export const fetchFoodById = createAsyncThunk('food/id', async (query) => {
   try {
     const res = await axios.get(
       FOOD_BASE_URL_ID +
-      query +
-      '?nutrients=203&nutrients=204&nutrients=205' +
-      `&api_key=${import.meta.env.VITE_FOOD_DATA_API_KEY}`,
+        query +
+        '?nutrients=203&nutrients=204&nutrients=205' +
+        `&api_key=${import.meta.env.VITE_FOOD_DATA_API_KEY}`,
     );
     return res.data;
   } catch (err) {
