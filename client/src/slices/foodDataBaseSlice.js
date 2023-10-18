@@ -5,7 +5,9 @@ const FOOD_BASE_URL_ID = 'https://api.nal.usda.gov/fdc/v1/food/';
 
 const initialState = {
   foods: [],
-  status: 'idle',
+  currentFood: [],
+  searchStatus: 'idle',
+  foodItemStatus: 'idle',
   error: null,
 };
 
@@ -51,27 +53,27 @@ const foodSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchFoodBySearch.pending, (state, action) => {
-        state.status = 'loading';
+        state.searchStatus = 'loading';
         state.error = null;
       })
       .addCase(fetchFoodBySearch.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.searchStatus = 'succeeded';
         state.foods = state.foods.concat(action.payload);
       })
       .addCase(fetchFoodBySearch.rejected, (state, action) => {
-        state.status = 'failed';
+        state.searchStatus = 'failed';
         state.error = action.error.message;
       })
       .addCase(fetchFoodById.pending, (state, action) => {
-        state.status = 'loading';
+        state.foodItemStatus = 'loading';
         state.error = null;
       })
       .addCase(fetchFoodById.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        console.log(action.payload);
+        state.foodItemStatus = 'succeeded';
+        state.currentFood = action.payload;
       })
       .addCase(fetchFoodById.rejected, (state, action) => {
-        state.status = 'failed';
+        state.foodItemStatus = 'failed';
         state.error = action.error.message;
       });
   },
