@@ -49,19 +49,19 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const FoodRingLog = ({ foodById }) => {
+const FoodRingLog = ({ food }) => {
   const { classes } = useStyles();
-  const protein = foodById.foodNutrients.find(
-    (nutrient) => nutrient.nutrientName === 'Protein',
+  const protein = food.foodNutrients.find(
+    (nutrient) => nutrient.nutrientNumber === '203',
   );
-  const carbs = foodById.foodNutrients.find(
-    (nutrient) => nutrient.nutrientName === 'Carbohydrate, by difference',
+  const carbs = food.foodNutrients.find(
+    (nutrient) => nutrient.nutrientNumber === '205',
   );
-  const fat = foodById.foodNutrients.find(
-    (nutrient) => nutrient.nutrientName === 'Total lipid (fat)',
+  const fat = food.foodNutrients.find(
+    (nutrient) => nutrient.nutrientNumber === '204',
   );
-  const kcal = foodById.foodNutrients.find(
-    (nutrient) => nutrient.nutrientName === 'Energy',
+  const kcal = food.foodNutrients.find(
+    (nutrient) => nutrient.nutrientNumber === '208',
   );
 
   const total = protein.value + carbs.value + fat.value;

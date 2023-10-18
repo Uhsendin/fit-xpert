@@ -21,10 +21,9 @@ const FoodTable = ({ tableData }) => {
 
   const rowClick = (e, id) => {
     if (!isRowClicked) {
-      setIsRowClicked(false);
+      setIsRowClicked(true);
     }
     setFoodId(id);
-    setIsRowClicked(true);
   };
   const { classes } = useStyles();
 
@@ -51,7 +50,7 @@ const FoodTable = ({ tableData }) => {
           <tbody>{rows}</tbody>
         </Table>
       </div>
-      {isRowClicked && <FoodSummaryPanel foodId={food} />}
+      {isRowClicked && <FoodSummaryPanel food={food} />}
     </>
   );
 };

@@ -33,7 +33,7 @@ export const fetchFoodById = createAsyncThunk('food/id', async (query) => {
     const res = await axios.get(
       FOOD_BASE_URL_ID +
         query +
-        '?nutrients=203&nutrients=204&nutrients=205' +
+        '?nutrients=203&nutrients=204&nutrients=205&nutrients=208' +
         `&api_key=${import.meta.env.VITE_FOOD_DATA_API_KEY}`,
     );
     return res.data;
