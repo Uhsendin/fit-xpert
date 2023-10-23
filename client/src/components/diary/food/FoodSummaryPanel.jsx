@@ -34,11 +34,7 @@ const FoodSummaryPanel = ({ food }) => {
   const currentFood = useSelector((state) => state.food.currentFood);
   const currentStatus = useSelector((state) => state.food.foodItemStatus);
   const dispatch = useDispatch();
-  const dummyArr = [
-    { value: '1g', label: 'g' },
-    { value: '4g', label: 'tsp, chopped - 4g' },
-    { value: '8g', label: 'grape - 8g' },
-  ];
+  const portionsArr = [];
 
   useEffect(() => {
     if (effectRan.current) {
@@ -46,13 +42,52 @@ const FoodSummaryPanel = ({ food }) => {
     }
     effectRan.current = true;
   }, [food]);
-  console.log(currentStatus);
+
+  const foodDataProcessor = () => {
+    if (currentFood.dataType === 'Foundation' && currentFood.foodPortions) {
+      currentFood.foodPortions.forEach((portion) => {
+        const { gramWeight, measureUnit, amount } = portion;
+        portionsArr.push({
+          value: gramWeight + 'g',
+          label: `${amount} ${measureUnit.name} (${gramWeight}g)`,
+        });
+      });
+    } else if (
+      currentFood.dataType === 'SR Legacy' &&
+      currentFood.foodPortions
+    ) {
+      currentFood.foodPortions.forEach((portion) => {
+        const { gramWeight, modifier, amount } = portion;
+        portionsArr.push({
+          value: gramWeight + 'g',
+          label: `${amount} ${modifier} (${gramWeight}g)`,
+        });
+      });
+    } else if (currentFood.dataType === 'Survey (FNDDS)') {
+      currentFood.foodPortions.forEach((portion) => {
+        const { gramWeight, portionDescription } = portion;
+        portionsArr.push({
+          value: gramWeight + 'g',
+          label: `${portionDescription} (${gramWeight}g)`,
+        });
+      });
+    } else if (currentFood.dataType === 'Branded') {
+      const { servingSize, servingSizeUnit, householdServingFullText } =
+        currentFood;
+      portionsArr.push({
+        value: servingSize + servingSizeUnit,
+        label: `${householdServingFullText} (${servingSize} ${servingSizeUnit})`,
+      });
+    }
+    portionsArr.push({ value: '100g', label: '100g' });
+  };
 
   if (currentStatus === 'loading') {
     return <div>Loading....</div>;
   }
 
   if (currentStatus === 'succeeded') {
+    foodDataProcessor();
     return (
       <>
         <Text className={classes.text}></Text>
@@ -77,7 +112,7 @@ const FoodSummaryPanel = ({ food }) => {
                     aria-label="Serving size"
                     value={servingNum}
                   />
-                  <Select defaultValue="1g" data={dummyArr} />
+                  <Select defaultValue="100g" data={portionsArr} />
                 </Group>
               </Stack>
             </Paper>

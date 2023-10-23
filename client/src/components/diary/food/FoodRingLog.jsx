@@ -60,8 +60,8 @@ const FoodRingLog = ({ food }) => {
   const fat = food.foodNutrients.find(
     (nutrient) => nutrient.nutrientNumber === '204',
   );
-  const kcal = food.foodNutrients.find(
-    (nutrient) => nutrient.nutrientNumber === '208',
+  const kcal = food.foodNutrients.find((nutrient) =>
+    ['208', '957'].includes(nutrient.nutrientNumber),
   );
 
   const total = protein.value + carbs.value + fat.value;
