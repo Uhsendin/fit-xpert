@@ -30,6 +30,7 @@ const useStyles = createStyles((theme) => ({
 const FoodSummaryPanel = ({ food }) => {
   const { classes } = useStyles();
   const [servingNum, setServingNum] = useState(1);
+  const [selectValue, setSelectValue] = useState('100g-1');
   const effectRan = useRef(false);
   const currentFood = useSelector((state) => state.food.currentFood);
   const currentStatus = useSelector((state) => state.food.foodItemStatus);
@@ -97,7 +98,7 @@ const FoodSummaryPanel = ({ food }) => {
         <Text className={classes.text}>{currentFood.description}</Text>
         <Grid grow gutter="xs">
           <Grid.Col span={6}>
-            <FoodRingLog food={food} />
+            <FoodRingLog food={food} servingNum={servingNum} />
           </Grid.Col>
 
           <Grid.Col span={6}>
@@ -115,8 +116,13 @@ const FoodSummaryPanel = ({ food }) => {
                     hideControls
                     aria-label="Serving size"
                     value={servingNum}
+                    onChange={setServingNum}
                   />
-                  <Select defaultValue="100g-1" data={portionsArr} />
+                  <Select
+                    defaultValue={selectValue}
+                    data={portionsArr}
+                    onChange={(value) => console.log(value)}
+                  />
                 </Group>
               </Stack>
             </Paper>
