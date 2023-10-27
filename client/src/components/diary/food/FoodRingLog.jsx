@@ -106,7 +106,10 @@ const FoodRingLog = ({ food, servingNum }) => {
                   <Text>
                     Protein: {(protein.value * servingNum).toFixed(2)}g (
                     <span className={classes.proteinText}>
-                      {proteinPercentage.toFixed(2)}%
+                      {Number.isNaN(proteinPercentage)
+                        ? '0.00'
+                        : proteinPercentage.toFixed(2)}
+                      %
                     </span>
                     )
                   </Text>
@@ -116,7 +119,10 @@ const FoodRingLog = ({ food, servingNum }) => {
                   <Text>
                     Net Carbs: {(carbs.value * servingNum).toFixed(2)}g (
                     <span className={classes.carbsText}>
-                      {carbsPercentage.toFixed(2)}%
+                      {Number.isNaN(carbsPercentage)
+                        ? '0.00'
+                        : carbsPercentage.toFixed(2)}
+                      %
                     </span>
                     )
                   </Text>
@@ -126,7 +132,10 @@ const FoodRingLog = ({ food, servingNum }) => {
                   <Text>
                     Fat: {(fat.value * servingNum).toFixed(2)}g (
                     <span className={classes.fatText}>
-                      {fatPercentage.toFixed(2)}%
+                      {Number.isNaN(fatPercentage)
+                        ? '0.00'
+                        : fatPercentage.toFixed(2)}
+                      %
                     </span>
                     )
                   </Text>
