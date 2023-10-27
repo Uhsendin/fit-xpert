@@ -62,11 +62,14 @@ const FoodRingLog = ({ food, servingNum }) => {
   const fat = findNutrient(food, '204');
   const kcal = findNutrient(food, '208') || findNutrientByNumber(food, '957');
 
-  const total = protein.value + carbs.value + fat.value;
+  const total =
+    protein.value * servingNum +
+    carbs.value * servingNum +
+    fat.value * servingNum;
 
-  const proteinPercentage = (protein.value / total) * 100;
-  const carbsPercentage = (carbs.value / total) * 100;
-  const fatPercentage = (fat.value / total) * 100;
+  const proteinPercentage = ((protein.value * servingNum) / total) * 100;
+  const carbsPercentage = ((carbs.value * servingNum) / total) * 100;
+  const fatPercentage = ((fat.value * servingNum) / total) * 100;
 
   const vals = [
     { value: carbsPercentage, color: '#1ccad7' },
@@ -89,7 +92,7 @@ const FoodRingLog = ({ food, servingNum }) => {
                 label={
                   <>
                     <Text fw={500} className={classes.text}>
-                      {kcal.value}
+                      {kcal.value * servingNum}
                     </Text>
                     <Text c="dimmed" className={classes.text}>
                       kcal
@@ -101,7 +104,7 @@ const FoodRingLog = ({ food, servingNum }) => {
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.protein}`}></div>
                   <Text>
-                    Protein: {protein.value}g (
+                    Protein: {(protein.value * servingNum).toFixed(2)}g (
                     <span className={classes.proteinText}>
                       {proteinPercentage.toFixed(2)}%
                     </span>
@@ -111,7 +114,7 @@ const FoodRingLog = ({ food, servingNum }) => {
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.carbs}`}></div>
                   <Text>
-                    Net Carbs: {carbs.value}g (
+                    Net Carbs: {(carbs.value * servingNum).toFixed(2)}g (
                     <span className={classes.carbsText}>
                       {carbsPercentage.toFixed(2)}%
                     </span>
@@ -121,7 +124,7 @@ const FoodRingLog = ({ food, servingNum }) => {
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.fat}`}></div>
                   <Text>
-                    Fat: {fat.value}g (
+                    Fat: {(fat.value * servingNum).toFixed(2)}g (
                     <span className={classes.fatText}>
                       {fatPercentage.toFixed(2)}%
                     </span>
