@@ -18,6 +18,7 @@ import FoodButton from './FoodButton';
 const useStyles = createStyles((theme) => ({
   text: {
     textAlign: 'center',
+    margin: '1rem 0',
   },
   numInput: {
     maxWidth: '3rem',
@@ -96,10 +97,16 @@ const FoodSummaryPanel = ({ food }) => {
     foodDataProcessor();
     return (
       <>
-        <Text className={classes.text}>{currentFood.description}</Text>
+        <Text fz="lg" className={classes.text}>
+          {currentFood.description}
+        </Text>
         <Grid grow gutter="xs">
           <Grid.Col span={6}>
-            <FoodRingLog food={food} servingNum={servingNum} />
+            <FoodRingLog
+              food={food}
+              servingNum={servingNum}
+              selectValue={selectValue}
+            />
           </Grid.Col>
 
           <Grid.Col span={6}>
@@ -122,7 +129,7 @@ const FoodSummaryPanel = ({ food }) => {
                   <Select
                     defaultValue={selectValue}
                     data={portionsArr}
-                    onChange={(value) => console.log(value)}
+                    onChange={setSelectValue}
                   />
                 </Group>
               </Stack>

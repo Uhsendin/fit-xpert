@@ -11,7 +11,7 @@ const useStyles = createStyles((theme) => ({
   tableWrapper: {
     overflowX: 'auto',
     // maxHeight: '650px',
-    maxHeight: '400px',
+    maxHeight: '380px',
   },
 }));
 

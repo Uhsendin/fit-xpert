@@ -51,10 +51,28 @@ const useStyles = createStyles((theme) => ({
 
 const FoodRingLog = ({ food, servingNum }) => {
   const { classes } = useStyles();
+
   const findNutrient = (food, nutrientNumber) => {
     return food.foodNutrients.find(
       (nutrient) => nutrient.nutrientNumber === nutrientNumber,
     );
+  };
+
+  const findPercentage = (macro) => {
+    const result = ((macro.value * servingNum) / total) * 100;
+    if (Number.isNaN(result)) {
+      return '0.00';
+    } else {
+      return result.toFixed(2);
+    }
+  };
+
+  const findNetMacro = (macro) => {
+    if (macro.nutrientNumber !== '208') {
+      return (macro.value * servingNum).toFixed(2);
+    } else {
+      return macro.value * servingNum;
+    }
   };
 
   const protein = findNutrient(food, '203');
@@ -67,18 +85,15 @@ const FoodRingLog = ({ food, servingNum }) => {
     carbs.value * servingNum +
     fat.value * servingNum;
 
-  const proteinPercentage = ((protein.value * servingNum) / total) * 100;
-  const carbsPercentage = ((carbs.value * servingNum) / total) * 100;
-  const fatPercentage = ((fat.value * servingNum) / total) * 100;
-
   const vals = [
-    { value: carbsPercentage, color: '#1ccad7' },
+    { value: findPercentage(carbs), color: '#1ccad7' },
     { value: 1, color: 'white' }, // Gap
-    { value: proteinPercentage, color: '#44d07b' },
+    { value: findPercentage(protein), color: '#44d07b' },
     { value: 1, color: 'white' }, // Gap
-    { value: fatPercentage, color: '#ea3b07' },
+    { value: findPercentage(fat), color: '#ea3b07' },
     { value: 1, color: 'white' }, // Gap
   ];
+
   return (
     <>
       <section>
@@ -92,7 +107,7 @@ const FoodRingLog = ({ food, servingNum }) => {
                 label={
                   <>
                     <Text fw={500} className={classes.text}>
-                      {kcal.value * servingNum}
+                      {findNetMacro(kcal)}
                     </Text>
                     <Text c="dimmed" className={classes.text}>
                       kcal
@@ -104,12 +119,9 @@ const FoodRingLog = ({ food, servingNum }) => {
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.protein}`}></div>
                   <Text>
-                    Protein: {(protein.value * servingNum).toFixed(2)}g (
+                    Protein: {findNetMacro(protein)}g (
                     <span className={classes.proteinText}>
-                      {Number.isNaN(proteinPercentage)
-                        ? '0.00'
-                        : proteinPercentage.toFixed(2)}
-                      %
+                      {findPercentage(protein)}%
                     </span>
                     )
                   </Text>
@@ -117,12 +129,9 @@ const FoodRingLog = ({ food, servingNum }) => {
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.carbs}`}></div>
                   <Text>
-                    Net Carbs: {(carbs.value * servingNum).toFixed(2)}g (
+                    Net Carbs: {findNetMacro(carbs)}g (
                     <span className={classes.carbsText}>
-                      {Number.isNaN(carbsPercentage)
-                        ? '0.00'
-                        : carbsPercentage.toFixed(2)}
-                      %
+                      {findPercentage(carbs)}%
                     </span>
                     )
                   </Text>
@@ -130,12 +139,9 @@ const FoodRingLog = ({ food, servingNum }) => {
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.fat}`}></div>
                   <Text>
-                    Fat: {(fat.value * servingNum).toFixed(2)}g (
+                    Fat: {findNetMacro(fat)}g (
                     <span className={classes.fatText}>
-                      {Number.isNaN(fatPercentage)
-                        ? '0.00'
-                        : fatPercentage.toFixed(2)}
-                      %
+                      {findPercentage(fat)}%
                     </span>
                     )
                   </Text>
