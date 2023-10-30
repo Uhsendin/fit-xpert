@@ -49,7 +49,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const FoodRingLog = ({ food, servingNum }) => {
+const FoodRingLog = ({ food, servingNum, selectValue }) => {
   const { classes } = useStyles();
 
   const findNutrient = (food, nutrientNumber) => {
@@ -58,22 +58,23 @@ const FoodRingLog = ({ food, servingNum }) => {
     );
   };
 
-  const findPercentage = (macro) => {
-    const result = ((macro.value * servingNum) / total) * 100;
+  const findPercentage = (macro, num) => {
+    const result = ((macro.value * servingNum * num) / total) * 100;
     if (Number.isNaN(result)) {
       return '0.00';
     } else {
-      return result.toFixed(2);
+      return result.toFixed(1);
     }
   };
 
   const findNetMacro = (macro) => {
     if (macro.nutrientNumber !== '208') {
-      return (macro.value * servingNum).toFixed(2);
+      return (macro.value * servingNum).toFixed(1);
     } else {
-      return macro.value * servingNum;
+      return Math.floor(macro.value * servingNum);
     }
   };
+  const selectedGrams = parseInt(selectValue.split('g')[0]);
 
   const protein = findNutrient(food, '203');
   const carbs = findNutrient(food, '205');
@@ -81,16 +82,16 @@ const FoodRingLog = ({ food, servingNum }) => {
   const kcal = findNutrient(food, '208') || findNutrientByNumber(food, '957');
 
   const total =
-    protein.value * servingNum +
-    carbs.value * servingNum +
-    fat.value * servingNum;
+    protein.value * servingNum * 4 +
+    carbs.value * servingNum * 4 +
+    fat.value * servingNum * 9;
 
   const vals = [
-    { value: findPercentage(carbs), color: '#1ccad7' },
+    { value: findPercentage(carbs, 4), color: '#1ccad7' },
     { value: 1, color: 'white' }, // Gap
-    { value: findPercentage(protein), color: '#44d07b' },
+    { value: findPercentage(protein, 4), color: '#44d07b' },
     { value: 1, color: 'white' }, // Gap
-    { value: findPercentage(fat), color: '#ea3b07' },
+    { value: findPercentage(fat, 9), color: '#ea3b07' },
     { value: 1, color: 'white' }, // Gap
   ];
 
@@ -121,7 +122,7 @@ const FoodRingLog = ({ food, servingNum }) => {
                   <Text>
                     Protein: {findNetMacro(protein)}g (
                     <span className={classes.proteinText}>
-                      {findPercentage(protein)}%
+                      {findPercentage(protein, 4)}%
                     </span>
                     )
                   </Text>
@@ -131,7 +132,7 @@ const FoodRingLog = ({ food, servingNum }) => {
                   <Text>
                     Net Carbs: {findNetMacro(carbs)}g (
                     <span className={classes.carbsText}>
-                      {findPercentage(carbs)}%
+                      {findPercentage(carbs, 4)}%
                     </span>
                     )
                   </Text>
@@ -141,7 +142,7 @@ const FoodRingLog = ({ food, servingNum }) => {
                   <Text>
                     Fat: {findNetMacro(fat)}g (
                     <span className={classes.fatText}>
-                      {findPercentage(fat)}%
+                      {findPercentage(fat, 9)}%
                     </span>
                     )
                   </Text>

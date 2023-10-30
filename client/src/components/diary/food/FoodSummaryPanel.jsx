@@ -125,6 +125,8 @@ const FoodSummaryPanel = ({ food }) => {
                     aria-label="Serving size"
                     value={servingNum}
                     onChange={setServingNum}
+                    step={0.01}
+                    precision={1}
                   />
                   <Select
                     defaultValue={selectValue}
