@@ -13,6 +13,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import FoodRingLog from './FoodRingLog';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFoodById } from '../../../slices/foodDataBaseSlice';
+import FoodButton from './FoodButton';
 
 const useStyles = createStyles((theme) => ({
   text: {
@@ -128,6 +129,7 @@ const FoodSummaryPanel = ({ food }) => {
             </Paper>
           </Grid.Col>
         </Grid>
+        <FoodButton />
       </>
     );
   }
