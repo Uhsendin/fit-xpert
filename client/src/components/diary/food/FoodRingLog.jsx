@@ -51,6 +51,7 @@ const useStyles = createStyles((theme) => ({
 
 const FoodRingLog = ({ food, servingNum, selectValue }) => {
   const { classes } = useStyles();
+  const selectedGrams = parseInt(selectValue.split('g')[0]);
 
   const findNutrient = (food, nutrientNumber) => {
     return food.foodNutrients.find(
@@ -69,12 +70,13 @@ const FoodRingLog = ({ food, servingNum, selectValue }) => {
 
   const findNetMacro = (macro) => {
     if (macro.nutrientNumber !== '208') {
-      return (macro.value * servingNum).toFixed(1);
+      return (((macro.value * servingNum) / 100) * selectedGrams).toFixed(1);
     } else {
-      return Math.floor(macro.value * servingNum);
+      const kcal = (macro.value * servingNum) / 100;
+      return Math.floor(kcal * selectedGrams);
+      // return Math.floor(macro.value * servingNum);
     }
   };
-  const selectedGrams = parseInt(selectValue.split('g')[0]);
 
   const protein = findNutrient(food, '203');
   const carbs = findNutrient(food, '205');
