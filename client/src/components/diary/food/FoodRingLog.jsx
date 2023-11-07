@@ -74,7 +74,6 @@ const FoodRingLog = ({ food, servingNum, selectValue }) => {
     } else {
       const kcal = (macro.value * servingNum) / 100;
       return Math.floor(kcal * selectedGrams);
-      // return Math.floor(macro.value * servingNum);
     }
   };
 
