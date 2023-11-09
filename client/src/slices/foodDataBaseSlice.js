@@ -4,15 +4,15 @@ const FOOD_BASE_URL_SEARCH = 'https://api.nal.usda.gov/fdc/v1/foods/';
 const FOOD_BASE_URL_ID = 'https://api.nal.usda.gov/fdc/v1/food/';
 
 const initialState = {
-  foods: [],
+  foodsSearchList: [],
   currentFood: [],
   searchStatus: 'idle',
-  foodItemStatus: 'idle',
+  currentFoodStatus: 'idle',
   error: null,
 };
 
 export const fetchFoodBySearch = createAsyncThunk(
-  'food/search',
+  'foods/search',
   async (query) => {
     const encodedQuery = encodeURIComponent(query);
     try {
@@ -28,7 +28,7 @@ export const fetchFoodBySearch = createAsyncThunk(
   },
 );
 
-export const fetchFoodById = createAsyncThunk('food/id', async (query) => {
+export const fetchFoodById = createAsyncThunk('foods/id', async (query) => {
   try {
     const res = await axios.get(
       FOOD_BASE_URL_ID +
@@ -46,8 +46,8 @@ const foodSlice = createSlice({
   name: 'food',
   initialState,
   reducers: {
-    clearFoods: (state) => {
-      state.foods = [];
+    clearFoodsSearchList: (state) => {
+      state.foodsSearchList = null;
     },
   },
   extraReducers(builder) {
@@ -58,28 +58,34 @@ const foodSlice = createSlice({
       })
       .addCase(fetchFoodBySearch.fulfilled, (state, action) => {
         state.searchStatus = 'succeeded';
-        state.foods = state.foods.concat(action.payload);
+        state.foodsSearchList = action.payload;
       })
       .addCase(fetchFoodBySearch.rejected, (state, action) => {
         state.searchStatus = 'failed';
         state.error = action.error.message;
       })
       .addCase(fetchFoodById.pending, (state, action) => {
-        state.foodItemStatus = 'loading';
+        state.currentFoodStatus = 'loading';
         state.error = null;
       })
       .addCase(fetchFoodById.fulfilled, (state, action) => {
-        state.foodItemStatus = 'succeeded';
+        state.currentFoodStatus = 'succeeded';
         state.currentFood = action.payload;
       })
       .addCase(fetchFoodById.rejected, (state, action) => {
-        state.foodItemStatus = 'failed';
+        state.currentFoodStatus = 'failed';
         state.error = action.error.message;
       });
   },
 });
-export const selectFoodById = (state, foodId) =>
-  state.food.foods[0].foods.find((food) => food.fdcId === foodId);
-export const { clearFoods } = foodSlice.actions;
+export const selectFoodById = (state, foodId) => {
+  if (state.food.foodsSearchList.foods) {
+    return state.food.foodsSearchList.foods.find(
+      (food) => food.fdcId === foodId,
+    );
+  } else return null;
+};
+
+export const { clearFoodsSearchList } = foodSlice.actions;
 
 export default foodSlice.reducer;

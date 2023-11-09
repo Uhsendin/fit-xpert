@@ -35,7 +35,7 @@ const FoodSummaryPanel = ({ food }) => {
   const [selectValue, setSelectValue] = useState('100g-1');
   const effectRan = useRef(false);
   const currentFood = useSelector((state) => state.food.currentFood);
-  const currentStatus = useSelector((state) => state.food.foodItemStatus);
+  const currentStatus = useSelector((state) => state.food.currentFoodStatus);
   const dispatch = useDispatch();
   const portionsArr = [];
 

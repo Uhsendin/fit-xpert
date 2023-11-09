@@ -1,5 +1,5 @@
 import { Table, createStyles } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import FoodSummaryPanel from './FoodSummaryPanel';
 import { useSelector } from 'react-redux';
 import { selectFoodById } from '../../../slices/foodDataBaseSlice';
@@ -28,15 +28,17 @@ const FoodTable = ({ tableData }) => {
   const { classes } = useStyles();
 
   const food = useSelector((state) => selectFoodById(state, FoodId));
-  const rows = tableData.map((element) => (
-    <tr
-      key={element.fdcId}
-      className={classes.tableRow}
-      onClick={(e) => rowClick(e, element.fdcId)}
-    >
-      <td>{element.description}</td>
-    </tr>
-  ));
+  const rows = Array.isArray(tableData)
+    ? tableData.map((element) => (
+      <tr
+        key={element.fdcId}
+        className={classes.tableRow}
+        onClick={(e) => rowClick(e, element.fdcId)}
+      >
+        <td>{element.description}</td>
+      </tr>
+    ))
+    : [];
 
   return (
     <>
