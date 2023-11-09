@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 const FOOD_BASE_URL_SEARCH = 'https://api.nal.usda.gov/fdc/v1/foods/';
 const FOOD_BASE_URL_ID = 'https://api.nal.usda.gov/fdc/v1/food/';
+const FOOD_URL = 'api/foods';
 
 const initialState = {
   foodsSearchList: [],
@@ -41,6 +42,18 @@ export const fetchFoodById = createAsyncThunk('foods/id', async (query) => {
     return err.message;
   }
 });
+
+export const addNewFood = createAsyncThunk(
+  'foods/addNewFood',
+  async (foodObjectInfo) => {
+    try {
+      const res = await axios.post(FOOD_URL, foodObjectInfo);
+      return res.data;
+    } catch (err) {
+      return err.response.data.error;
+    }
+  },
+);
 
 const foodSlice = createSlice({
   name: 'food',
