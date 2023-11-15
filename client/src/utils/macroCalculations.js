@@ -21,3 +21,17 @@ export const findNetMacro = (macro, servingNum, selectedGrams) => {
     return Math.floor(kcal * selectedGrams);
   }
 };
+
+export const calculateNutrients = (food, servingNum, selectedGrams) => {
+  const protein = findNutrient(food, '203');
+  const carbs = findNutrient(food, '205');
+  const fat = findNutrient(food, '204');
+  const kcal = findNutrient(food, '208') || findNutrient(food, '957');
+
+  return {
+    kcal: findNetMacro(kcal, servingNum, selectedGrams),
+    protein: findNetMacro(protein, servingNum, selectedGrams),
+    carbs: findNetMacro(carbs, servingNum, selectedGrams),
+    fat: findNetMacro(fat, servingNum, selectedGrams),
+  };
+};

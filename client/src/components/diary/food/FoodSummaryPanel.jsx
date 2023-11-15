@@ -138,7 +138,11 @@ const FoodSummaryPanel = ({ food }) => {
             </Paper>
           </Grid.Col>
         </Grid>
-        <FoodButton servingNum={servingNum} selectValue={selectValue} />
+        <FoodButton
+          servingNum={servingNum}
+          selectValue={selectValue}
+          food={food}
+        />
       </>
     );
   }
