@@ -61,7 +61,7 @@ const FoodRingLog = ({ food, servingNum, selectValue }) => {
   const protein = findNutrient(food, '203');
   const carbs = findNutrient(food, '205');
   const fat = findNutrient(food, '204');
-  const kcal = findNutrient(food, '208') || findNutrientByNumber(food, '957');
+  const kcal = findNutrient(food, '208') || findNutrient(food, '957');
 
   const total =
     protein.value * servingNum * 4 +

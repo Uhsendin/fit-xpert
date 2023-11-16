@@ -28,6 +28,7 @@ const FoodTable = ({ tableData }) => {
   const { classes } = useStyles();
 
   const food = useSelector((state) => selectFoodById(state, FoodId));
+  const isFoodDefined = food !== undefined && food !== null;
   const rows = Array.isArray(tableData)
     ? tableData.map((element) => (
       <tr
@@ -52,7 +53,7 @@ const FoodTable = ({ tableData }) => {
           <tbody>{rows}</tbody>
         </Table>
       </div>
-      {isRowClicked && <FoodSummaryPanel food={food} />}
+      {isRowClicked && isFoodDefined && <FoodSummaryPanel food={food} />}
     </>
   );
 };
