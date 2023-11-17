@@ -28,7 +28,7 @@ const FoodModel = ({ opened, onClose }) => {
         title={<span className={classes.title}>Add Food to Diary</span>}
       >
         <SearchInput />
-        <FoodTableTabs />
+        <FoodTableTabs onClose={onClose} />
       </Modal>
     </>
   );

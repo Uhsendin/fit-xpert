@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const FoodTable = ({ tableData }) => {
+const FoodTable = ({ tableData, onClose }) => {
   const [FoodId, setFoodId] = useState(null);
   const [isRowClicked, setIsRowClicked] = useState(false);
 
@@ -63,7 +63,11 @@ const FoodTable = ({ tableData }) => {
         </Table>
       </div>
       {isRowClicked && isFoodDefined && (
-        <FoodSummaryPanel food={food} setIsRowClicked={setIsRowClicked} />
+        <FoodSummaryPanel
+          food={food}
+          setIsRowClicked={setIsRowClicked}
+          onClose={onClose}
+        />
       )}
     </>
   );

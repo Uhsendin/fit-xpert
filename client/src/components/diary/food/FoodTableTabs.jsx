@@ -9,7 +9,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const FoodTableTabs = () => {
+const FoodTableTabs = ({ onClose }) => {
   const foodListSearch = useSelector((state) => state.food.foodsSearchList);
   const [activeTab, setActiveTab] = useState('all');
   const { classes } = useStyles();
@@ -22,7 +22,9 @@ const FoodTableTabs = () => {
       </Tabs.List>
 
       <Tabs.Panel value="all">
-        {foodListSearch && <FoodTable tableData={foodListSearch.foods} />}
+        {foodListSearch && (
+          <FoodTable tableData={foodListSearch.foods} onClose={onClose} />
+        )}
       </Tabs.Panel>
       {/**/}
       {/* <Tabs.Panel value="favorites"> */}

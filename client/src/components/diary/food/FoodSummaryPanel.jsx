@@ -33,7 +33,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const FoodSummaryPanel = ({ food, setIsRowClicked }) => {
+const FoodSummaryPanel = ({ food, setIsRowClicked, onClose }) => {
   const { classes } = useStyles();
   const [servingNum, setServingNum] = useState(1);
   const [selectValue, setSelectValue] = useState('100g-1');
@@ -157,6 +157,7 @@ const FoodSummaryPanel = ({ food, setIsRowClicked }) => {
           servingNum={servingNum}
           selectValue={selectValue}
           food={food}
+          onClose={onClose}
         />
       </>
     );

@@ -1,10 +1,13 @@
 import { Button, Center, createStyles } from '@mantine/core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addNewFood } from '../../../slices/foodDataBaseSlice';
+import {
+  addNewFood,
+  clearFoodsSearchList,
+} from '../../../slices/foodDataBaseSlice';
 import { calculateNutrients } from '../../../utils/macroCalculations';
 
-const FoodButton = ({ servingNum, selectValue, food }) => {
+const FoodButton = ({ servingNum, selectValue, food, onClose }) => {
   const useStyles = createStyles(() => ({
     btn: {
       marginTop: '1rem',
@@ -27,6 +30,9 @@ const FoodButton = ({ servingNum, selectValue, food }) => {
     };
 
     dispatch(addNewFood(foodObj));
+    // onClose comes from FoodModel and is pass down many components
+    onClose();
+    dispatch(clearFoodsSearchList());
   };
   return (
     <>
