@@ -16,14 +16,14 @@ const FoodButton = ({ servingNum, selectValue, food }) => {
     const selectedGrams = parseInt(selectValue.split('g')[0]);
     const { fdcId, description } = food;
 
-    const nutritens = calculateNutrients(food, servingNum, selectedGrams);
+    const nutrients = calculateNutrients(food, servingNum, selectedGrams);
 
     const foodObj = {
       foodId: fdcId,
       foodName: description,
       portionSize: selectedGrams + 'g',
       servingSize: servingNum,
-      nutritens,
+      nutrients,
     };
 
     dispatch(addNewFood(foodObj));

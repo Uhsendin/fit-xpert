@@ -78,11 +78,11 @@ const FoodSummaryPanel = ({ food }) => {
         });
       });
     } else if (currentFood.dataType === 'Branded') {
-      const { id, servingSize, servingSizeUnit, householdServingFullText } =
+      const { fdcId, servingSize, servingSizeUnit, householdServingFullText } =
         currentFood;
       portionsArr.push({
-        key: id,
-        value: servingSize + servingSizeUnit + `-${id}`,
+        key: fdcId,
+        value: servingSize + servingSizeUnit + `-${fdcId}`,
         label: `${householdServingFullText} (${servingSize} ${servingSizeUnit})`,
       });
     }
