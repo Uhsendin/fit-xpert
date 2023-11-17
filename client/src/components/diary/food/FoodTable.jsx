@@ -1,5 +1,5 @@
 import { Table, createStyles } from '@mantine/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FoodSummaryPanel from './FoodSummaryPanel';
 import { useSelector } from 'react-redux';
 import { selectFoodById } from '../../../slices/foodDataBaseSlice';
@@ -10,14 +10,17 @@ const useStyles = createStyles((theme) => ({
   },
   tableWrapper: {
     overflowX: 'auto',
-    // maxHeight: '650px',
-    maxHeight: '380px',
   },
 }));
 
 const FoodTable = ({ tableData }) => {
   const [FoodId, setFoodId] = useState(null);
   const [isRowClicked, setIsRowClicked] = useState(false);
+
+  useEffect(() => {
+    setFoodId(null);
+    setIsRowClicked(false);
+  }, [tableData]);
 
   const rowClick = (e, id) => {
     if (!isRowClicked) {
@@ -29,6 +32,12 @@ const FoodTable = ({ tableData }) => {
 
   const food = useSelector((state) => selectFoodById(state, FoodId));
   const isFoodDefined = food !== undefined && food !== null;
+
+  const wrapperStyle = {
+    maxHeight: isRowClicked ? '360px' : '650px',
+    overflowx: 'hidden',
+  };
+
   const rows = Array.isArray(tableData)
     ? tableData.map((element) => (
       <tr
@@ -43,7 +52,7 @@ const FoodTable = ({ tableData }) => {
 
   return (
     <>
-      <div className={classes.tableWrapper}>
+      <div className={classes.tableWrapper} style={wrapperStyle}>
         <Table className={classes.table} striped highlightOnHover withBorder>
           <thead>
             <tr>
@@ -53,7 +62,9 @@ const FoodTable = ({ tableData }) => {
           <tbody>{rows}</tbody>
         </Table>
       </div>
-      {isRowClicked && isFoodDefined && <FoodSummaryPanel food={food} />}
+      {isRowClicked && isFoodDefined && (
+        <FoodSummaryPanel food={food} setIsRowClicked={setIsRowClicked} />
+      )}
     </>
   );
 };

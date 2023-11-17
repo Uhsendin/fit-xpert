@@ -1,5 +1,6 @@
 import {
   Checkbox,
+  CloseButton,
   Grid,
   Group,
   NumberInput,
@@ -27,9 +28,12 @@ const useStyles = createStyles((theme) => ({
     height: '100%',
     width: '100%',
   },
+  closeBtn: {
+    margin: '0.5rem 0 0 auto',
+  },
 }));
 
-const FoodSummaryPanel = ({ food }) => {
+const FoodSummaryPanel = ({ food, setIsRowClicked }) => {
   const { classes } = useStyles();
   const [servingNum, setServingNum] = useState(1);
   const [selectValue, setSelectValue] = useState('100g-1');
@@ -45,6 +49,10 @@ const FoodSummaryPanel = ({ food }) => {
     }
     effectRan.current = true;
   }, [food]);
+
+  const handleClose = () => {
+    setIsRowClicked(false);
+  };
 
   const foodDataProcessor = () => {
     if (currentFood.dataType === 'Foundation' && currentFood.foodPortions) {
@@ -97,6 +105,13 @@ const FoodSummaryPanel = ({ food }) => {
     foodDataProcessor();
     return (
       <>
+        <CloseButton
+          className={classes.closeBtn}
+          aria-label="close modal"
+          size="xs"
+          iconSize={20}
+          onClick={handleClose}
+        />
         <Text fz="lg" className={classes.text}>
           {currentFood.description}
         </Text>
