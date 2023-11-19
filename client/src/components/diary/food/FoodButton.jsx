@@ -1,11 +1,9 @@
 import { Button, Center, createStyles } from '@mantine/core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  addNewFood,
-  clearFoodsSearchList,
-} from '../../../slices/foodDataBaseSlice';
+import { clearFoodsSearchList } from '../../../slices/foodDataBaseSlice';
 import { calculateNutrients } from '../../../utils/macroCalculations';
+import { addNewFood } from '../../../slices/foodsSlice';
 
 const FoodButton = ({ servingNum, selectValue, food, onClose }) => {
   const useStyles = createStyles(() => ({

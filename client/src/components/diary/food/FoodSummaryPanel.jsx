@@ -38,8 +38,10 @@ const FoodSummaryPanel = ({ food, setIsRowClicked, onClose }) => {
   const [servingNum, setServingNum] = useState(1);
   const [selectValue, setSelectValue] = useState('100g-1');
   const effectRan = useRef(false);
-  const currentFood = useSelector((state) => state.food.currentFood);
-  const currentStatus = useSelector((state) => state.food.currentFoodStatus);
+  const currentFood = useSelector((state) => state.foodDataBase.currentFood);
+  const currentStatus = useSelector(
+    (state) => state.foodDataBase.currentFoodStatus,
+  );
   const dispatch = useDispatch();
   const portionsArr = [];
 

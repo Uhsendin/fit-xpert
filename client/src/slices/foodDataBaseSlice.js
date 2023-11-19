@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 const FOOD_BASE_URL_SEARCH = 'https://api.nal.usda.gov/fdc/v1/foods/';
 const FOOD_BASE_URL_ID = 'https://api.nal.usda.gov/fdc/v1/food/';
-const FOOD_URL = 'api/foods';
 
 const initialState = {
   foodsSearchList: [],
@@ -13,13 +12,13 @@ const initialState = {
 };
 
 export const fetchFoodBySearch = createAsyncThunk(
-  'foods/search',
+  'foodDataBase/search',
   async (query) => {
     const encodedQuery = encodeURIComponent(query);
     try {
       const res = await axios.get(
         FOOD_BASE_URL_SEARCH +
-          `search?&query=${encodedQuery}&dataType=Branded,Foundation,Survey (FNDDS),SR Legacy&pageSize=50&pageNumber=1&requireAllWords=true
+        `search?&query=${encodedQuery}&dataType=Branded,Foundation,Survey (FNDDS),SR Legacy&pageSize=50&pageNumber=1&requireAllWords=true
 &sortOrder=asc&api_key=${import.meta.env.VITE_FOOD_DATA_API_KEY}`,
       );
       return res.data;
@@ -29,34 +28,25 @@ export const fetchFoodBySearch = createAsyncThunk(
   },
 );
 
-export const fetchFoodById = createAsyncThunk('foods/id', async (query) => {
-  try {
-    const res = await axios.get(
-      FOOD_BASE_URL_ID +
+export const fetchFoodById = createAsyncThunk(
+  'foodDataBase/id',
+  async (query) => {
+    try {
+      const res = await axios.get(
+        FOOD_BASE_URL_ID +
         query +
         '?nutrients=203&nutrients=204&nutrients=205&nutrients=208' +
         `&api_key=${import.meta.env.VITE_FOOD_DATA_API_KEY}`,
-    );
-    return res.data;
-  } catch (err) {
-    return err.message;
-  }
-});
-
-export const addNewFood = createAsyncThunk(
-  'foods/addNewFood',
-  async (foodObjectInfo) => {
-    try {
-      const res = await axios.post(FOOD_URL, foodObjectInfo);
+      );
       return res.data;
     } catch (err) {
-      return err.response.data.error;
+      return err.message;
     }
   },
 );
 
-const foodSlice = createSlice({
-  name: 'food',
+const foodDataBaseSlice = createSlice({
+  name: 'foodDataBase',
   initialState,
   reducers: {
     clearFoodsSearchList: (state) => {
@@ -92,13 +82,13 @@ const foodSlice = createSlice({
   },
 });
 export const selectFoodById = (state, foodId) => {
-  if (state.food.foodsSearchList.foods) {
-    return state.food.foodsSearchList.foods.find(
+  if (state.foodDataBase.foodsSearchList.foods) {
+    return state.foodDataBase.foodsSearchList.foods.find(
       (food) => food.fdcId === foodId,
     );
   } else return null;
 };
+export const selectAllFoods = (state) => state.foodDataBase.userFoods;
+export const { clearFoodsSearchList } = foodDataBaseSlice.actions;
 
-export const { clearFoodsSearchList } = foodSlice.actions;
-
-export default foodSlice.reducer;
+export default foodDataBaseSlice.reducer;

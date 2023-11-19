@@ -10,7 +10,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const FoodTableTabs = ({ onClose }) => {
-  const foodListSearch = useSelector((state) => state.food.foodsSearchList);
+  const foodListSearch = useSelector(
+    (state) => state.foodDataBase.foodsSearchList,
+  );
   const [activeTab, setActiveTab] = useState('all');
   const { classes } = useStyles();
   return (
