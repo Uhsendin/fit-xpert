@@ -8,6 +8,18 @@ const initialState = {
   error: null,
 };
 
+export const fetchFoodsByDate = createAsyncThunk(
+  'foods/fetchFoods',
+  async (date) => {
+    try {
+      const res = await axios.get(FOOD_URL + `/${date}`);
+      return [...res.data];
+    } catch (err) {
+      return err.response.data.error;
+    }
+  },
+);
+
 export const addNewFood = createAsyncThunk(
   'foods/addNewFood',
   async (foodObjectInfo) => {
@@ -23,11 +35,27 @@ export const addNewFood = createAsyncThunk(
 const foodsSlice = createSlice({
   name: 'food',
   initialState,
-  reducers: {},
+  reducers: {
+    resetFoods: (state) => {
+      state.userFoods = [];
+    },
+  },
   extraReducers(builder) {
-    builder.addCase(addNewFood.fulfilled, (state, action) => {
-      state.userFoods.push(action.payload);
-    });
+    builder
+      .addCase(fetchFoodsByDate.pending, (state, action) => {
+        state.userFoodStatus = 'loading';
+      })
+      .addCase(fetchFoodsByDate.fulfilled, (state, action) => {
+        state.userFoodStatus = 'succeeded';
+        state.userFoods = action.payload;
+      })
+      .addCase(fetchFoodsByDate.rejected, (state, action) => {
+        state.userFoodStatus = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(addNewFood.fulfilled, (state, action) => {
+        state.userFoods.push(action.payload);
+      });
   },
 });
 
