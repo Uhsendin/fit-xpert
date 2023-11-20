@@ -42,10 +42,11 @@ const createFood = asyncHandler(async (req, res) => {
 const getFoodByDate = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const providedTimestamp = parseInt(req.params.date);
-  const twentyFourHoursAgo = providedTimestamp - 24 * 60 * 60 * 1000;
+  const end = new Date(new Date(providedTimestamp).setHours(23, 59, 59, 999));
+  const start = new Date(new Date(providedTimestamp).setHours(0, 0, 0, 0));
 
   const foods = await Food.find({
-    createdAt: { $gte: twentyFourHoursAgo, $lt: providedTimestamp },
+    createdAt: { $gte: start, $lt: end },
     user: userId,
   });
 
@@ -53,7 +54,7 @@ const getFoodByDate = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Foods not found');
   }
-  res.json(foods);
+  // res.json(start, end);
 });
 
 export { createFood, getFoodByDate };
