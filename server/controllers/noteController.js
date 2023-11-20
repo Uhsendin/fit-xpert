@@ -40,16 +40,14 @@ const getUserNotes = asyncHandler(async (req, res) => {
 const getUserNotesByDate = asyncHandler(async (req, res) => {
   const { date } = req.params;
   const userId = req.user._id;
-  const selectedDate = new Date(Number(date));
-
-  const day = selectedDate.getDate().toString().padStart(2, '0');
-  const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
-  const year = selectedDate.getFullYear();
+  const timestampDate = new Date(parseInt(date));
+  const startDate = new Date(timestampDate).setHours(0, 0, 0, 0);
+  const endDate = new Date(timestampDate).setHours(23, 59, 59, 999);
 
   let notes = await Note.find({
     createdAt: {
-      $gte: new Date(`${year}-${month}-${day}T00:00:00.000Z`),
-      $lt: new Date(`${year}-${month}-${day}T23:59:59.999Z`),
+      $gte: startDate,
+      $lt: endDate,
     },
     user: userId,
   });

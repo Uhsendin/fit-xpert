@@ -36,17 +36,18 @@ const createFood = asyncHandler(async (req, res) => {
   res.json(savedFood);
 });
 
-// Desc     Get all foods baseed on date range
+// Desc     Get all foods based on date range
 // route    POST /api/foods/:date
 // access   Private
 const getFoodByDate = asyncHandler(async (req, res) => {
+  const { date } = req.params;
   const userId = req.user._id;
-  const providedTimestamp = parseInt(req.params.date);
-  const end = new Date(new Date(providedTimestamp).setHours(23, 59, 59, 999));
-  const start = new Date(new Date(providedTimestamp).setHours(0, 0, 0, 0));
+  const timestampDate = new Date(parseInt(date));
+  const startDate = new Date(timestampDate).setHours(0, 0, 0, 0);
+  const endDate = new Date(timestampDate).setHours(23, 59, 59, 999);
 
   const foods = await Food.find({
-    createdAt: { $gte: start, $lt: end },
+    createdAt: { $gte: startDate, $lt: endDate },
     user: userId,
   });
 
@@ -54,7 +55,7 @@ const getFoodByDate = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Foods not found');
   }
-  // res.json(start, end);
+  res.json(foods);
 });
 
 export { createFood, getFoodByDate };
