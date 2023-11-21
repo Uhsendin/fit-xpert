@@ -7,6 +7,10 @@ const foodSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    dataType: {
+      type: String,
+      default: 'foods',
+    },
     foodId: {
       type: Number,
       required: true,

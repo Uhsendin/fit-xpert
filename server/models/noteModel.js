@@ -7,6 +7,10 @@ const noteSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    dataType: {
+      type: String,
+      default: 'notes',
+    },
     content: {
       type: String,
       required: true,
