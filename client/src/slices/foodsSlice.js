@@ -59,4 +59,7 @@ const foodsSlice = createSlice({
   },
 });
 
+export const selectAllFoods = (state) => state.foods.userFoods;
+export const getFoodsStatus = (state) => state.foods.userFoodStatus;
+export const getFoodsError = (state) => state.foods.error;
 export default foodsSlice.reducer;

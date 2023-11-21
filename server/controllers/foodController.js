@@ -51,7 +51,7 @@ const getFoodByDate = asyncHandler(async (req, res) => {
     user: userId,
   });
 
-  if (foods === null || foods.length === 0) {
+  if (foods === null) {
     res.status(404);
     throw new Error('Foods not found');
   }
