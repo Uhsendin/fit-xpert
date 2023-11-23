@@ -8,6 +8,9 @@ import React from 'react';
 import TableDiary from './note/TableDiary';
 import { useSelector } from 'react-redux';
 import FoodModel from './food/FoodModel';
+import PanelTable from './PanelTable';
+import { selectAllNotes } from '../../slices/notesSlice';
+import { selectAllFoods } from '../../slices/foodsSlice';
 
 const useStyles = createStyles((theme) => ({
   box: {
@@ -44,7 +47,9 @@ const DiaryPanel = () => {
     useDisclosure(false);
   const [foodOpened, { open: openFood, close: closeFood }] =
     useDisclosure(false);
-
+  const notes = useSelector(selectAllNotes);
+  const foods = useSelector(selectAllFoods);
+  const joinedArr = [...notes, ...foods];
   const currentDate = useSelector((state) => state.date.selectedDate);
   const date = new Date(currentDate);
   const isToday = date.toDateString() === new Date().toDateString();
@@ -96,10 +101,8 @@ const DiaryPanel = () => {
             </Button>
           </Group>
           <Box className={classes.boxOutline}>
-            <TableDiary />
-            {/* <Text fw={500}> */}
-            {/* Add food, exercise, or notes to display them in your diary. */}
-            {/* </Text> */}
+            {/* <TableDiary /> */}
+            <PanelTable rowDataArr={joinedArr} />
           </Box>
         </Box>
       </section>

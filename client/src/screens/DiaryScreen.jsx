@@ -6,21 +6,23 @@ import Pagination from '../components/diary/Pagination';
 import DiaryPanel from '../components/diary/DiaryPanel';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNotes, getNotesStatus, resetNotes } from '../slices/notesSlice';
+import { fetchFoodsByDate } from '../slices/foodsSlice';
 
 const DiaryScreen = () => {
   const isRan = useRef(false);
   const dispatch = useDispatch();
   const currentDate = useSelector((state) => state.date.selectedDate);
   const [selectedDate, setSelectedDate] = useState(currentDate);
-
   const notesStatus = useSelector(getNotesStatus);
   useEffect(() => {
     if (!isRan.current && notesStatus === 'idle') {
       dispatch(fetchNotes(currentDate));
+      dispatch(fetchFoodsByDate(currentDate));
     }
     if (selectedDate !== currentDate) {
       dispatch(resetNotes());
       dispatch(fetchNotes(currentDate));
+      dispatch(fetchFoodsByDate(currentDate));
       setSelectedDate(currentDate);
     }
 
