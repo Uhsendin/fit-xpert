@@ -5,7 +5,6 @@ import { MdiRun } from '../../assets/MdiRun';
 import { TwemojiRedApple } from '../../assets/TwemojiRedApple';
 import NoteModelContent from './note/NoteModelContent';
 import React from 'react';
-import TableDiary from './note/TableDiary';
 import { useSelector } from 'react-redux';
 import FoodModel from './food/FoodModel';
 import PanelTable from './PanelTable';
@@ -101,7 +100,6 @@ const DiaryPanel = () => {
             </Button>
           </Group>
           <Box className={classes.boxOutline}>
-            {/* <TableDiary /> */}
             <PanelTable rowDataArr={joinedArr} />
           </Box>
         </Box>
