@@ -160,6 +160,7 @@ const FoodSummaryPanel = ({ food, setIsRowClicked, onClose }) => {
           selectValue={selectValue}
           food={food}
           onClose={onClose}
+          portionsArr={portionsArr}
         />
       </>
     );

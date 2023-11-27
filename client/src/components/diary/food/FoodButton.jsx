@@ -5,7 +5,13 @@ import { clearFoodsSearchList } from '../../../slices/foodDataBaseSlice';
 import { calculateNutrients } from '../../../utils/macroCalculations';
 import { addNewFood } from '../../../slices/foodsSlice';
 
-const FoodButton = ({ servingNum, selectValue, food, onClose }) => {
+const FoodButton = ({
+  servingNum,
+  selectValue,
+  food,
+  onClose,
+  portionsArr,
+}) => {
   const useStyles = createStyles(() => ({
     btn: {
       marginTop: '1rem',
@@ -22,6 +28,7 @@ const FoodButton = ({ servingNum, selectValue, food, onClose }) => {
     const foodObj = {
       foodId: fdcId,
       foodName: description,
+      availablePortionSizes: portionsArr,
       portionSize: selectedGrams + 'g',
       servingSize: servingNum,
       nutrients,
