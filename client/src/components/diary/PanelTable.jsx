@@ -23,13 +23,20 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 const PanelTable = ({ rowDataArr }) => {
-  const [opened, { open, close }] = useDisclosure(false);
+  const [openedNote, { open: openNote, close: closeNote }] =
+    useDisclosure(false);
+  const [openedFood, { open: openFood, close: closeFood }] =
+    useDisclosure(false);
   const [selectedId, setSelctedId] = useState('');
   const { classes } = useStyles();
 
   const rowClick = (e, id, dataType) => {
     setSelctedId(id);
-    open();
+    if (dataType === 'notes') {
+      openNote();
+    } else if (dataType === 'foods') {
+      console.log('foods');
+    }
   };
 
   const rows = rowDataArr.map((element) => (
@@ -63,7 +70,7 @@ const PanelTable = ({ rowDataArr }) => {
           <td>kcal</td>
         </>
       ) : // Add conditions for other cases if needed
-        null}
+      null}
     </tr>
   ));
 
@@ -71,8 +78,8 @@ const PanelTable = ({ rowDataArr }) => {
     <>
       <Table fontSize="sm" striped highlightOnHover>
         <UpdateNoteModel
-          opened={opened}
-          onClose={close}
+          opened={openedNote}
+          onClose={closeNote}
           title="Update note"
           noteId={selectedId}
         />
