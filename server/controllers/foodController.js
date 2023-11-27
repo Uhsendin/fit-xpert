@@ -6,9 +6,23 @@ import Food from '../models/foodModel.js';
 // access   Private
 const createFood = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  const { foodId, foodName, portionSize, servingSize, nutrients } = req.body;
+  const {
+    foodId,
+    foodName,
+    portionSize,
+    servingSize,
+    nutrients,
+    availablePortionSizes,
+  } = req.body;
 
-  if (!foodId || !foodName || !portionSize || !servingSize || !nutrients) {
+  if (
+    !foodId ||
+    !foodName ||
+    !portionSize ||
+    !servingSize ||
+    !nutrients ||
+    availablePortionSizes < 1
+  ) {
     res.status(400).json({ error: 'All required fields must be provided.' });
   }
 
@@ -27,6 +41,7 @@ const createFood = asyncHandler(async (req, res) => {
     user: userId,
     foodId,
     foodName,
+    availablePortionSizes,
     portionSize,
     servingSize,
     nutrients,

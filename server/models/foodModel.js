@@ -19,6 +19,25 @@ const foodSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    availablePortionSizes: {
+      type: [
+        {
+          key: {
+            type: Number,
+            required: true,
+          },
+          value: {
+            type: String,
+            required: true,
+          },
+          label: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+      required: true,
+    },
     portionSize: {
       type: String,
       required: true,
