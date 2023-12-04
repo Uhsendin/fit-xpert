@@ -59,6 +59,8 @@ const foodsSlice = createSlice({
   },
 });
 
+export const selectFoodById = (state, foodId) =>
+  state.foods.userFoods.find((food) => food._id === foodId);
 export const selectAllFoods = (state) => state.foods.userFoods;
 export const getFoodsStatus = (state) => state.foods.userFoodStatus;
 export const getFoodsError = (state) => state.foods.error;

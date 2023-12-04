@@ -5,6 +5,7 @@ import MaterialSymbolsAddNotes from '../../assets/MaterialSymbolsAddNotes';
 import TwemojiRedApple from '../../assets/TwemojiRedApple';
 import MdiRun from '../../assets/MdiRun';
 import UpdateNoteModel from './note/UpdateNoteModel';
+import UpdateFoodModel from './food/UpdateFoodModel';
 
 const useStyles = createStyles((theme) => ({
   contentWrapper: {
@@ -35,7 +36,7 @@ const PanelTable = ({ rowDataArr }) => {
     if (dataType === 'notes') {
       openNote();
     } else if (dataType === 'foods') {
-      console.log('foods');
+      openFood();
     }
   };
 
@@ -65,12 +66,12 @@ const PanelTable = ({ rowDataArr }) => {
           </td>
           <td>{element.foodName}</td>
           <td>{element.servingSize}</td>
-          <td>{element.portionSize}</td>
+          <td>{parseInt(element.portionSize.split('g')[0]) + 'g'}</td>
           <td>{element.nutrients.kcal}</td>
           <td>kcal</td>
         </>
       ) : // Add conditions for other cases if needed
-      null}
+        null}
     </tr>
   ));
 
@@ -82,6 +83,12 @@ const PanelTable = ({ rowDataArr }) => {
           onClose={closeNote}
           title="Update note"
           noteId={selectedId}
+        />
+
+        <UpdateFoodModel
+          opened={openedFood}
+          onClose={closeFood}
+          foodId={selectedId}
         />
         <tbody>{rows}</tbody>
       </Table>

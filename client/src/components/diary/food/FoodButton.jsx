@@ -29,7 +29,7 @@ const FoodButton = ({
       foodId: fdcId,
       foodName: description,
       availablePortionSizes: portionsArr,
-      portionSize: selectedGrams + 'g',
+      portionSize: selectValue,
       servingSize: servingNum,
       nutrients,
     };
