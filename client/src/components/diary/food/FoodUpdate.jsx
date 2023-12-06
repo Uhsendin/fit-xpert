@@ -29,21 +29,20 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-const FoodUpdate = ({ foodId, isOpen }) => {
-  const food = useSelector((state) => selectFoodById(state, foodId));
-  const {
-    availablePortionSizes,
-    foodName,
-    nutrients,
-    portionSize,
-    servingSize,
-  } = food;
-  const [servingNumState, setServingNumState] = useState(servingSize);
-  const [portionSizeState, setPortionSizeState] = useState(portionSize);
+const FoodUpdate = ({
+  foodId,
+  servingNumState,
+  setServingNumState,
+  portionSizeState,
+  setPortionSizeState,
+  isOpen,
+}) => {
   const { classes } = useStyles();
+  const food = useSelector((state) => selectFoodById(state, foodId));
+  const { availablePortionSizes, foodName } = food;
 
+  console.log(portionSizeState);
   if (isOpen) {
-    console.log(portionSizeState);
     return (
       <>
         <section>
