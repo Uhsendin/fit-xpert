@@ -9,6 +9,7 @@ const UpdateFoodModel = ({ opened, onClose, foodId }) => {
   const [servingNumState, setServingNumState] = useState('');
   const [portionSizeState, setPortionSizeState] = useState('');
   const [availablePortion, setAvailablePortion] = useState('');
+  const [foodName, setFoodname] = useState('');
   const handleClose = () => {
     onClose();
   };
@@ -19,6 +20,7 @@ const UpdateFoodModel = ({ opened, onClose, foodId }) => {
       setServingNumState(food.servingSize);
       setPortionSizeState(food.portionSize);
       setAvailablePortion(food.availablePortionSizes);
+      setFoodname(food.foodName);
     }
   }, [opened, food]);
 
@@ -29,7 +31,7 @@ const UpdateFoodModel = ({ opened, onClose, foodId }) => {
   return (
     <Modal size="40rem" opened={opened} onClose={handleClose}>
       <FoodUpdate
-        foodId={foodId}
+        foodName={foodName}
         servingNumState={servingNumState}
         portionSizeState={portionSizeState}
         availablePortion={availablePortion}
