@@ -30,18 +30,13 @@ const useStyles = createStyles(() => ({
 }));
 
 const FoodUpdate = ({
-  foodId,
-  servingNumState,
-  setServingNumState,
-  portionSizeState,
-  setPortionSizeState,
   isOpen,
+  servingNumState,
+  portionSizeState,
+  availablePortion,
 }) => {
   const { classes } = useStyles();
-  const food = useSelector((state) => selectFoodById(state, foodId));
-  const { availablePortionSizes, foodName } = food;
 
-  console.log(portionSizeState);
   if (isOpen) {
     return (
       <>
@@ -49,7 +44,7 @@ const FoodUpdate = ({
           <div className={classes.labelDiv}>
             <div className={classes.labelName}>
               <Text ta="center" fw={600}>
-                {foodName}
+                {'foodName'}
               </Text>
             </div>
           </div>
@@ -61,10 +56,7 @@ const FoodUpdate = ({
             step={0.01}
             precision={1}
           />
-          <Select
-            data={availablePortionSizes}
-            defaultValue={portionSizeState}
-          />
+          <Select data={availablePortion} defaultValue={portionSizeState} />
         </section>
       </>
     );
