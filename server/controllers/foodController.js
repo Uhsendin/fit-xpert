@@ -73,4 +73,26 @@ const getFoodByDate = asyncHandler(async (req, res) => {
   res.json(foods);
 });
 
-export { createFood, getFoodByDate };
+// Desc     Update food by id
+// route    PUT /api/foods:id
+// access   Private
+const updateFoodById = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const foodId = req.params.id;
+  const { servingSize, portionSize, nutrients } = req.body;
+
+  const updatedFood = await Food.findOneAndUpdate(
+    { _id: foodId, user: userId },
+    { nutrients, servingSize, portionSize },
+    { new: true },
+  );
+
+  if (updatedFood === null) {
+    res.status(404);
+    throw new Error('Food not found');
+  }
+
+  res.json(updatedFood);
+});
+
+export { createFood, getFoodByDate, updateFoodById };
