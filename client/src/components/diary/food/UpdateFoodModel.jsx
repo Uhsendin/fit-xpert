@@ -1,42 +1,15 @@
 import { Modal } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import FoodUpdate from './FoodUpdate';
-import { useSelector } from 'react-redux';
-import { selectFoodById } from '../../../slices/foodsSlice';
 
 const UpdateFoodModel = ({ opened, onClose, foodId }) => {
-  const food = useSelector((state) => selectFoodById(state, foodId));
-  const [servingNumState, setServingNumState] = useState('');
-  const [portionSizeState, setPortionSizeState] = useState('');
-  const [availablePortion, setAvailablePortion] = useState('');
-  const [foodName, setFoodname] = useState('');
   const handleClose = () => {
     onClose();
   };
 
-  useEffect(() => {
-    if (opened && food) {
-      console.log(food);
-      setServingNumState(food.servingSize);
-      setPortionSizeState(food.portionSize);
-      setAvailablePortion(food.availablePortionSizes);
-      setFoodname(food.foodName);
-    }
-  }, [opened, food]);
-
-  const handleUpdate = () => {
-    console.log('updated');
-    onClose();
-  };
   return (
     <Modal size="40rem" opened={opened} onClose={handleClose}>
-      <FoodUpdate
-        foodName={foodName}
-        servingNumState={servingNumState}
-        portionSizeState={portionSizeState}
-        availablePortion={availablePortion}
-        isOpen={opened}
-      />
+      <FoodUpdate foodId={foodId} isOpen={opened} />
     </Modal>
   );
 };

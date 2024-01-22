@@ -6,25 +6,36 @@ import {
   Text,
   createStyles,
 } from '@mantine/core';
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectFoodById } from '../../../slices/foodsSlice';
 
 const useStyles = createStyles(() => ({
   numInput: {
     maxWidth: '3rem',
   },
   section: {
-    height: '300px',
+    marginBottom: '10rem',
   },
 }));
 
-const FoodUpdate = ({
-  isOpen,
-  servingNumState,
-  portionSizeState,
-  availablePortion,
-  foodName,
-}) => {
+const FoodUpdate = ({ isOpen, foodId }) => {
+  const food = useSelector((state) => selectFoodById(state, foodId));
+  const {
+    foodName,
+    portionSize,
+    availablePortionSizes,
+    servingSize,
+    nutrients,
+  } = food;
+  const [servingNumState, setServingNumState] = useState(servingSize);
+  const [portionSizeState, setPortionSizeState] = useState(portionSize);
   const { classes } = useStyles();
+
+  const handleUpdate = () => {
+    console.log(servingNumState);
+    console.log(portionSizeState);
+  };
 
   if (isOpen) {
     return (
@@ -44,17 +55,19 @@ const FoodUpdate = ({
               hideControls
               aria-label="Serving size"
               value={servingNumState}
+              onChange={(e) => setServingNumState(e)}
               step={0.01}
               precision={1}
             />
             <Select
-              data={availablePortion}
+              data={availablePortionSizes}
               defaultValue={portionSizeState}
+              onChange={(e) => setPortionSizeState(e)}
               dropdownPosition="bottom"
             />
           </Group>
-          <Button>Update Food</Button>
         </section>
+        <Button onClick={handleUpdate}>Update</Button>
       </>
     );
   }
