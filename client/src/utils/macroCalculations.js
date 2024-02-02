@@ -13,12 +13,12 @@ export const findPercentage = (macro, num, servingNum, total) => {
   }
 };
 
-export const findNetMacro = (macro, servingNum, selectedGrams) => {
+export const findNetMacro = (macro, servingNum, selectedPortion) => {
   if (macro.nutrientNumber !== '208') {
-    return (((macro.value * servingNum) / 100) * selectedGrams).toFixed(1);
+    return (((macro.value * servingNum) / 100) * selectedPortion).toFixed(1);
   } else {
     const kcal = (macro.value * servingNum) / 100;
-    return Math.floor(kcal * selectedGrams);
+    return Math.floor(kcal * selectedPortion);
   }
 };
 
@@ -31,16 +31,16 @@ export const updateMacro = (
   return (selectedPortion / previousPortion) * macro * servingNum;
 };
 
-export const calculateNutrients = (food, servingNum, selectedGrams) => {
+export const calculateNutrients = (food, servingNum, selectedPortion) => {
   const protein = findNutrient(food, '203');
   const carbs = findNutrient(food, '205');
   const fat = findNutrient(food, '204');
   const kcal = findNutrient(food, '208') || findNutrient(food, '957');
 
   return {
-    kcal: findNetMacro(kcal, servingNum, selectedGrams),
-    protein: findNetMacro(protein, servingNum, selectedGrams),
-    carbs: findNetMacro(carbs, servingNum, selectedGrams),
-    fat: findNetMacro(fat, servingNum, selectedGrams),
+    kcal: findNetMacro(kcal, servingNum, selectedPortion),
+    protein: findNetMacro(protein, servingNum, selectedPortion),
+    carbs: findNetMacro(carbs, servingNum, selectedPortion),
+    fat: findNetMacro(fat, servingNum, selectedPortion),
   };
 };
