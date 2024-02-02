@@ -9,6 +9,7 @@ import {
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectFoodById } from '../../../slices/foodsSlice';
+import { updateMacro } from '../../../utils/macroCalculations';
 
 const useStyles = createStyles(() => ({
   numInput: {
@@ -33,8 +34,16 @@ const FoodUpdate = ({ isOpen, foodId }) => {
   const { classes } = useStyles();
 
   const handleUpdate = () => {
-    console.log(servingNumState);
-    console.log(portionSizeState);
+    console.log(nutrients);
+    const portionState = Number(portionSizeState.split('g')[0]);
+    const oldPortionState = Number(portionSize.split('g')[0]);
+    const resultf = updateMacro(
+      nutrients['kcal'],
+      servingNumState,
+      portionState,
+      oldPortionState,
+    );
+    console.log(resultf);
   };
 
   if (isOpen) {

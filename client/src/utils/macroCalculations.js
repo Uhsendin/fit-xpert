@@ -22,6 +22,15 @@ export const findNetMacro = (macro, servingNum, selectedGrams) => {
   }
 };
 
+export const updateMacro = (
+  macro,
+  servingNum,
+  selectedPortion,
+  previousPortion,
+) => {
+  return (selectedPortion / previousPortion) * macro * servingNum;
+};
+
 export const calculateNutrients = (food, servingNum, selectedGrams) => {
   const protein = findNutrient(food, '203');
   const carbs = findNutrient(food, '205');
