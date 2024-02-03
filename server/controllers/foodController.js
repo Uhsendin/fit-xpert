@@ -81,6 +81,23 @@ const updateFoodById = asyncHandler(async (req, res) => {
   const foodId = req.params.id;
   const { servingSize, portionSize, nutrients } = req.body;
 
+  if (!servingSize || !portionSize || !nutrients) {
+    return res
+      .status(400)
+      .json({ error: 'All required fields must be provided.' });
+  }
+
+  if (
+    !('kcal' in nutrients) ||
+    !('protein' in nutrients) ||
+    !('carbs' in nutrients) ||
+    !('fat' in nutrients)
+  ) {
+    return res
+      .status(400)
+      .json({ error: 'Nutrients object must contain all required fields.' });
+  }
+
   const updatedFood = await Food.findOneAndUpdate(
     { _id: foodId, user: userId },
     { nutrients, servingSize, portionSize },
