@@ -34,10 +34,9 @@ export const addNewFood = createAsyncThunk(
 
 export const updateFood = createAsyncThunk(
   'foods/updateFood',
-  async (initialFood) => {
-    const { id } = initialFood;
+  async ({ id, initialFood }) => {
     try {
-      const res = await axios.put(FOOD_URL + `/${id},`, initialFood);
+      const res = await axios.put(FOOD_URL + `/${id}`, initialFood);
       return res.data;
     } catch (err) {
       return err.message;
@@ -68,6 +67,19 @@ const foodsSlice = createSlice({
       })
       .addCase(addNewFood.fulfilled, (state, action) => {
         state.userFoods.push(action.payload);
+      })
+      .addCase(updateFood.pending, (state) => {
+        state.userFoodStatus = 'loading';
+      })
+      .addCase(updateFood.fulfilled, (state, action) => {
+        state.userFoods = state.userFoods
+          .map((food) =>
+            food._id === action.payload._id ? action.payload : food,
+          )
+          .addCase(updateFood.rejected, (state, action) => {
+            state.userFoodStatus = 'Failed';
+            state.error = action.error.message;
+          });
       });
   },
 });
