@@ -32,6 +32,19 @@ export const addNewFood = createAsyncThunk(
   },
 );
 
+export const updateFood = createAsyncThunk(
+  'foods/updateFood',
+  async (initialFood) => {
+    const { id } = initialFood;
+    try {
+      const res = await axios.put(FOOD_URL + `/${id},`, initialFood);
+      return res.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
+);
+
 const foodsSlice = createSlice({
   name: 'food',
   initialState,
