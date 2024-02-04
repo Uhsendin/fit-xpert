@@ -31,6 +31,38 @@ export const updateMacro = (
   return (selectedPortion / previousPortion) * macro * servingNum;
 };
 
+export const getAllMacros = (
+  macrosObj,
+  servingNum,
+  selectedPortion,
+  previousPortion,
+) => {
+  const protein = macrosObj['protein'];
+  const carbs = macrosObj['carbs'];
+  const fat = macrosObj['fat'];
+  const kcal = macrosObj['kcal'];
+  return {
+    kcal: Math.floor(
+      updateMacro(kcal, servingNum, selectedPortion, previousPortion),
+    ),
+    protein: updateMacro(
+      protein,
+      servingNum,
+      selectedPortion,
+      previousPortion,
+    ).toFixed(1),
+    carbs: updateMacro(
+      carbs,
+      servingNum,
+      selectedPortion,
+      previousPortion,
+    ).toFixed(1),
+    fat: updateMacro(fat, servingNum, selectedPortion, previousPortion).toFixed(
+      1,
+    ),
+  };
+};
+
 export const calculateNutrients = (food, servingNum, selectedPortion) => {
   const protein = findNutrient(food, '203');
   const carbs = findNutrient(food, '205');
