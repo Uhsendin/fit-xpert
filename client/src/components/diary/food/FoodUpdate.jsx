@@ -7,9 +7,9 @@ import {
   createStyles,
 } from '@mantine/core';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectFoodById } from '../../../slices/foodsSlice';
-import { updateMacro } from '../../../utils/macroCalculations';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectFoodById, updateFood } from '../../../slices/foodsSlice';
+import { getAllMacros } from '../../../utils/macroCalculations';
 
 const useStyles = createStyles(() => ({
   numInput: {
@@ -20,7 +20,8 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-const FoodUpdate = ({ isOpen, foodId }) => {
+const FoodUpdate = ({ isOpen, foodId, onClose }) => {
+  const dispatch = useDispatch();
   const food = useSelector((state) => selectFoodById(state, foodId));
   const {
     foodName,
@@ -34,16 +35,21 @@ const FoodUpdate = ({ isOpen, foodId }) => {
   const { classes } = useStyles();
 
   const handleUpdate = () => {
-    console.log(nutrients);
-    const portionState = Number(portionSizeState.split('g')[0]);
-    const oldPortionState = Number(portionSize.split('g')[0]);
-    const resultf = updateMacro(
-      nutrients['kcal'],
+    const portionSplitValue = Number(portionSizeState.split('g')[0]);
+    const originalPortion = Number(portionSize.split('g')[0]);
+    const updatedMacros = getAllMacros(
+      nutrients,
       servingNumState,
-      portionState,
-      oldPortionState,
+      portionSplitValue,
+      originalPortion,
     );
-    console.log(resultf);
+    const updatedMacroValues = {
+      servingSize: servingNumState,
+      portionSize: portionSizeState,
+      nutrients: updatedMacros,
+    };
+    dispatch(updateFood({ id: food._id, initialFood: updatedMacroValues }));
+    onClose();
   };
 
   if (isOpen) {

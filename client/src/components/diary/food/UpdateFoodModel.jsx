@@ -9,7 +9,7 @@ const UpdateFoodModel = ({ opened, onClose, foodId }) => {
 
   return (
     <Modal size="40rem" opened={opened} onClose={handleClose}>
-      <FoodUpdate foodId={foodId} isOpen={opened} />
+      <FoodUpdate foodId={foodId} isOpen={opened} onClose={onClose} />
     </Modal>
   );
 };
