@@ -72,14 +72,14 @@ const foodsSlice = createSlice({
         state.userFoodStatus = 'loading';
       })
       .addCase(updateFood.fulfilled, (state, action) => {
-        state.userFoods = state.userFoods
-          .map((food) =>
-            food._id === action.payload._id ? action.payload : food,
-          )
-          .addCase(updateFood.rejected, (state, action) => {
-            state.userFoodStatus = 'Failed';
-            state.error = action.error.message;
-          });
+        state.userFoodStatus = 'succeeded';
+        state.userFoods = state.userFoods.map((food) =>
+          food._id === action.payload._id ? action.payload : food,
+        );
+      })
+      .addCase(updateFood.rejected, (state, action) => {
+        state.userFoodStatus = 'failed';
+        state.error = action.error.message;
       });
   },
 });
