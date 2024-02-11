@@ -1,7 +1,10 @@
-export const findNutrient = (food, nutrientNumber) => {
-  return food.foodNutrients.find(
-    (nutrient) => nutrient.nutrientNumber === nutrientNumber,
-  );
+export const findNutrient = (food, nutrientIdentifier, isOrigin) => {
+  if (isOrigin) {
+    return food.foodNutrients.find(
+      (nutrient) => nutrient.nutrientNumber === nutrientIdentifier,
+    );
+  }
+  return food[nutrientIdentifier];
 };
 
 export const findPercentage = (macro, num, servingNum, total) => {
