@@ -8,11 +8,11 @@ import {
   createStyles,
 } from '@mantine/core';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import {
   findNetMacro,
   findNutrient,
   findPercentage,
+  updateMacro,
 } from '../../../utils/macroCalculations';
 
 const useStyles = createStyles((theme) => ({
@@ -55,18 +55,37 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const FoodRingLog = ({ food, servingNum, selectValue }) => {
+const FoodRingLog = ({
+  food,
+  servingNum,
+  selectValue,
+  isAddFood,
+  previousSelectValue,
+}) => {
   const { classes } = useStyles();
   const selectedGrams = parseInt(selectValue.split('g')[0]);
-  const protein = findNutrient(food, '203');
-  const carbs = findNutrient(food, '205');
-  const fat = findNutrient(food, '204');
-  const kcal = findNutrient(food, '208') || findNutrient(food, '957');
-
-  const total =
-    protein.value * servingNum * 4 +
-    carbs.value * servingNum * 4 +
-    fat.value * servingNum * 9;
+  let protein;
+  let carbs;
+  let fat;
+  let kcal;
+  let total;
+  if (isAddFood) {
+    protein = findNutrient(food, '203', true);
+    carbs = findNutrient(food, '205', true);
+    fat = findNutrient(food, '204', true);
+    kcal = findNutrient(food, '208', true) || findNutrient(food, '957', true);
+    total =
+      protein.value * servingNum * 4 +
+      carbs.value * servingNum * 4 +
+      fat.value * servingNum * 9;
+  } else {
+    protein = findNutrient(food, 'protein', false);
+    carbs = findNutrient(food, 'carbs', false);
+    fat = findNutrient(food, 'fat', false);
+    kcal = findNutrient(food, 'kcal', false);
+    total =
+      protein * servingNum * 4 + carbs * servingNum * 4 + fat * servingNum * 9;
+  }
 
   const vals = [
     { value: findPercentage(carbs, 4, servingNum, total), color: '#1ccad7' },
@@ -90,7 +109,14 @@ const FoodRingLog = ({ food, servingNum, selectValue }) => {
                 label={
                   <>
                     <Text fw={500} className={classes.text}>
-                      {findNetMacro(kcal, servingNum, selectedGrams)}
+                      {isAddFood
+                        ? findNetMacro(kcal, servingNum, selectedGrams)
+                        : updateMacro(
+                          food['kcal'],
+                          servingNum,
+                          selectedGrams,
+                          previousSelectValue,
+                        )}
                     </Text>
                     <Text c="dimmed" className={classes.text}>
                       kcal
@@ -102,8 +128,16 @@ const FoodRingLog = ({ food, servingNum, selectValue }) => {
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.protein}`}></div>
                   <Text>
-                    Protein: {findNetMacro(protein, servingNum, selectedGrams)}g
-                    (
+                    Protein:{' '}
+                    {isAddFood
+                      ? findNetMacro(protein, servingNum, selectedGrams)
+                      : updateMacro(
+                        food['protein'],
+                        servingNum,
+                        selectedGrams,
+                        previousSelectValue,
+                      )}
+                    g (
                     <span className={classes.proteinText}>
                       {findPercentage(protein, 4, servingNum, total)}%
                     </span>
@@ -113,8 +147,16 @@ const FoodRingLog = ({ food, servingNum, selectValue }) => {
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.carbs}`}></div>
                   <Text>
-                    Net Carbs: {findNetMacro(carbs, servingNum, selectedGrams)}g
-                    (
+                    Net Carbs:{' '}
+                    {isAddFood
+                      ? findNetMacro(carbs, servingNum, selectedGrams)
+                      : updateMacro(
+                        food['carbs'],
+                        servingNum,
+                        selectedGrams,
+                        previousSelectValue,
+                      )}
+                    g (
                     <span className={classes.carbsText}>
                       {findPercentage(carbs, 4, servingNum, total)}%
                     </span>
@@ -124,7 +166,16 @@ const FoodRingLog = ({ food, servingNum, selectValue }) => {
                 <Flex align="center">
                   <div className={`${classes.circle} ${classes.fat}`}></div>
                   <Text>
-                    Fat: {findNetMacro(fat, servingNum, selectedGrams)}g (
+                    Fat:{' '}
+                    {isAddFood
+                      ? findNetMacro(fat, servingNum, selectedGrams)
+                      : updateMacro(
+                        food['fat'],
+                        servingNum,
+                        selectedGrams,
+                        previousSelectValue,
+                      )}
+                    g (
                     <span className={classes.fatText}>
                       {findPercentage(fat, 9, servingNum, total)}%
                     </span>

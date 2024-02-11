@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFoodById, updateFood } from '../../../slices/foodsSlice';
 import { getAllMacros } from '../../../utils/macroCalculations';
+import FoodRingLog from './FoodRingLog';
 
 const useStyles = createStyles(() => ({
   numInput: {
@@ -82,6 +83,13 @@ const FoodUpdate = ({ isOpen, foodId, onClose }) => {
             />
           </Group>
         </section>
+        <FoodRingLog
+          food={nutrients}
+          servingNum={servingNumState}
+          selectValue={portionSizeState}
+          isAddFood={false}
+          previousSelectValue={Number(portionSize.split('g')[0])}
+        />
         <Button onClick={handleUpdate}>Update</Button>
       </>
     );

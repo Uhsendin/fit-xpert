@@ -123,6 +123,7 @@ const FoodSummaryPanel = ({ food, setIsRowClicked, onClose }) => {
               food={food}
               servingNum={servingNum}
               selectValue={selectValue}
+              isAddFood={true}
             />
           </Grid.Col>
 
