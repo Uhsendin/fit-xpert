@@ -111,11 +111,13 @@ const FoodRingLog = ({
                     <Text fw={500} className={classes.text}>
                       {isAddFood
                         ? findNetMacro(kcal, servingNum, selectedGrams)
-                        : updateMacro(
-                          food['kcal'],
-                          servingNum,
-                          selectedGrams,
-                          previousSelectValue,
+                        : Math.floor(
+                          updateMacro(
+                            food['kcal'],
+                            servingNum,
+                            selectedGrams,
+                            previousSelectValue,
+                          ),
                         )}
                     </Text>
                     <Text c="dimmed" className={classes.text}>
@@ -136,7 +138,7 @@ const FoodRingLog = ({
                         servingNum,
                         selectedGrams,
                         previousSelectValue,
-                      )}
+                      ).toFixed(1)}
                     g (
                     <span className={classes.proteinText}>
                       {findPercentage(protein, 4, servingNum, total)}%
@@ -155,7 +157,7 @@ const FoodRingLog = ({
                         servingNum,
                         selectedGrams,
                         previousSelectValue,
-                      )}
+                      ).toFixed(1)}
                     g (
                     <span className={classes.carbsText}>
                       {findPercentage(carbs, 4, servingNum, total)}%
@@ -174,7 +176,7 @@ const FoodRingLog = ({
                         servingNum,
                         selectedGrams,
                         previousSelectValue,
-                      )}
+                      ).toFixed(1)}
                     g (
                     <span className={classes.fatText}>
                       {findPercentage(fat, 9, servingNum, total)}%

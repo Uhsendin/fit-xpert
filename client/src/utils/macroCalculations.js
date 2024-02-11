@@ -8,7 +8,8 @@ export const findNutrient = (food, nutrientIdentifier, isOrigin) => {
 };
 
 export const findPercentage = (macro, num, servingNum, total) => {
-  const result = ((macro.value * servingNum * num) / total) * 100;
+  let value = macro.value || macro;
+  const result = ((value * servingNum * num) / total) * 100;
   if (Number.isNaN(result)) {
     return '0.00';
   } else {
