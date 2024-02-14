@@ -112,4 +112,23 @@ const updateFoodById = asyncHandler(async (req, res) => {
   res.json(updatedFood);
 });
 
-export { createFood, getFoodByDate, updateFoodById };
+// Desc Delete single food
+// DELETE /api/foods:id
+// access Private
+const deleteFoodById = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const foodId = req.params.id;
+
+  const deleteFood = await Food.findOneAndDelete({ _id: foodId, user: userId });
+
+  if (deleteFood === null) {
+    return res.status(404).json({
+      status: 'Failed delete request',
+      message: `No food object was found with the ${foodId} was found`,
+    });
+  }
+
+  res.status(204).end();
+});
+
+export { createFood, getFoodByDate, updateFoodById, deleteFoodById };
