@@ -68,7 +68,6 @@ const getFoodByDate = asyncHandler(async (req, res) => {
 
   if (foods === null) {
     res.status(404);
-    throw new Error('Foods not found');
   }
   res.json(foods);
 });
@@ -105,8 +104,10 @@ const updateFoodById = asyncHandler(async (req, res) => {
   );
 
   if (updatedFood === null) {
-    res.status(404);
-    throw new Error('Food not found');
+    return res.status(404).json({
+      status: 'Failed update request',
+      message: `No food object was found with the ${foodId} was found`,
+    });
   }
 
   res.json(updatedFood);
