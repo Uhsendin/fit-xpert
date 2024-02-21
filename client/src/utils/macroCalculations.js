@@ -68,10 +68,11 @@ export const getAllMacros = (
 };
 
 export const calculateNutrients = (food, servingNum, selectedPortion) => {
-  const protein = findNutrient(food, '203');
-  const carbs = findNutrient(food, '205');
-  const fat = findNutrient(food, '204');
-  const kcal = findNutrient(food, '208') || findNutrient(food, '957');
+  const protein = findNutrient(food, '203', true);
+  const carbs = findNutrient(food, '205', true);
+  const fat = findNutrient(food, '204', true);
+  const kcal =
+    findNutrient(food, '208', true) || findNutrient(food, '957', true);
 
   return {
     kcal: findNetMacro(kcal, servingNum, selectedPortion),
