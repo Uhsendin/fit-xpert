@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 const FOOD_URL = 'api/foods';
 
@@ -44,6 +45,19 @@ export const updateFood = createAsyncThunk(
   },
 );
 
+export const deleteFood = createAsyncThunk(
+  'foods/deleteFood',
+  async (initialFood) => {
+    const { id } = initialFood;
+    try {
+      const res = await axios.delete(FOOD_URL + `/${id}`);
+      return { _id: id };
+    } catch (err) {
+      return err.message;
+    }
+  },
+);
+
 const foodsSlice = createSlice({
   name: 'food',
   initialState,
@@ -80,6 +94,17 @@ const foodsSlice = createSlice({
       .addCase(updateFood.rejected, (state, action) => {
         state.userFoodStatus = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(deleteFood.fulfilled, (state, action) => {
+        if (!action.payload._id) {
+          state.userFoodStatus = 'failed';
+          state.error = action.error.message;
+          toast.error('(Error 404: Food not found) Try again!');
+          return;
+        }
+        state.userFoods = state.userFoods.filter(
+          (food) => food._id !== action.payload._id,
+        );
       });
   },
 });
