@@ -1,5 +1,6 @@
 import {
   Button,
+  Center,
   Group,
   NumberInput,
   Select,
@@ -13,11 +14,17 @@ import { getAllMacros } from '../../../utils/macroCalculations';
 import FoodRingLog from './FoodRingLog';
 
 const useStyles = createStyles(() => ({
+  title: {
+    marginBottom: '2rem',
+  },
   numInput: {
     maxWidth: '3rem',
   },
   section: {
-    marginBottom: '10rem',
+    marginBottom: '2rem',
+  },
+  btn: {
+    marginTop: '1rem',
   },
 }));
 
@@ -59,29 +66,32 @@ const FoodUpdate = ({ isOpen, foodId, onClose }) => {
         <section className={classes.section}>
           <div>
             <div>
-              <Text ta="center" fw={600}>
+              <Text className={classes.title} ta="center" fw={600}>
                 {foodName}
               </Text>
             </div>
           </div>
-          <Group>
-            <NumberInput
-              className={classes.numInput}
-              type="number"
-              hideControls
-              aria-label="Serving size"
-              value={servingNumState}
-              onChange={(e) => setServingNumState(e)}
-              step={0.01}
-              precision={1}
-            />
-            <Select
-              data={availablePortionSizes}
-              defaultValue={portionSizeState}
-              onChange={(e) => setPortionSizeState(e)}
-              dropdownPosition="bottom"
-            />
-          </Group>
+          <Center>
+            <Group>
+              <Text>Serving Size</Text>
+              <NumberInput
+                className={classes.numInput}
+                type="number"
+                hideControls
+                aria-label="Serving size"
+                value={servingNumState}
+                onChange={(e) => setServingNumState(e)}
+                step={0.01}
+                precision={1}
+              />
+              <Select
+                data={availablePortionSizes}
+                defaultValue={portionSizeState}
+                onChange={(e) => setPortionSizeState(e)}
+                dropdownPosition="bottom"
+              />
+            </Group>
+          </Center>
         </section>
         <FoodRingLog
           food={nutrients}
@@ -90,7 +100,18 @@ const FoodUpdate = ({ isOpen, foodId, onClose }) => {
           isAddFood={false}
           previousSelectValue={Number(portionSize.split('g')[0])}
         />
-        <Button onClick={handleUpdate}>Update</Button>
+        <Center>
+          <Button
+            className={classes.btn}
+            type="submit"
+            variant="light"
+            radius="lg"
+            size="lg"
+            onClick={handleUpdate}
+          >
+            Update
+          </Button>
+        </Center>
       </>
     );
   }
