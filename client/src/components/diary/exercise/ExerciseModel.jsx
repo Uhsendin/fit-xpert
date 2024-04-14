@@ -1,5 +1,6 @@
 import { Modal } from "@mantine/core";
 import React from "react";
+import SearchInput from "./SearchInput";
 
 const ExerciseModel = ({ opened, onClose }) => {
   const handleClose = () => {
@@ -11,8 +12,10 @@ const ExerciseModel = ({ opened, onClose }) => {
         size="60rem"
         opened={opened}
         onClose={handleClose}
-        title={<span>Add Exercise to Diary</span>}
-      ></Modal>
+        title={<span>Add Exercises to Diary</span>}
+      >
+        <SearchInput />
+      </Modal>
     </>
   );
 };
