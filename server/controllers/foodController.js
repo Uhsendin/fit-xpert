@@ -60,9 +60,12 @@ const getFoodByDate = asyncHandler(async (req, res) => {
   const timestampDate = new Date(parseInt(date));
   const startDate = new Date(timestampDate).setHours(0, 0, 0, 0);
   const endDate = new Date(timestampDate).setHours(23, 59, 59, 999);
+  const offset = new Date().getTimezoneOffset() * 60000
+  const localStartDate = new Date(startDate - offset)
+  const localEndDate = new Date(endDate - offset)
 
   const foods = await Food.find({
-    createdAt: { $gte: startDate, $lt: endDate },
+    createdAt: { $gte: localStartDate, $lt: localEndDate },
     user: userId,
   });
 
